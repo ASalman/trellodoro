@@ -3,6 +3,7 @@ package com.asalman.trellodoro.restapi;
 
 import com.asalman.trellodoro.BuildConfig;
 import com.asalman.trellodoro.restapi.service.BoardServices;
+import com.asalman.trellodoro.restapi.service.CardServices;
 import com.asalman.trellodoro.restapi.service.ListServices;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -26,6 +27,7 @@ public class RestClient
 
     private static BoardServices boardService;
     private static ListServices listService;
+    private static CardServices cardService;
     private static RestAdapter restAdapter;
 
     private RestClient() { }
@@ -83,5 +85,17 @@ public class RestClient
             listService = getRestAdapter().create(ListServices.class);
         }
         return listService;
+    }
+
+    /**
+     * Build CardServices object which allow user to call all card services
+     * @return CArdServices
+     */
+    public static CardServices getCardServices()
+    {
+        if (cardService == null){
+            cardService = getRestAdapter().create(CardServices.class);
+        }
+        return cardService;
     }
 }

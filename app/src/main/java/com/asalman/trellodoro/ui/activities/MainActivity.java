@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.asalman.trellodoro.R;
 import com.asalman.trellodoro.models.Board;
+import com.asalman.trellodoro.models.Card;
 import com.asalman.trellodoro.restapi.RestClient;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements Callback<List<Boa
         public void success(List<com.asalman.trellodoro.models.List> lists, Response response) {
             for (com.asalman.trellodoro.models.List list : lists){
                 Log.d("List name: ", list.getName());
+                RestClient.getCardServices().getListCards(list.getId(), cardCallback);
             }
         }
 
@@ -29,6 +31,21 @@ public class MainActivity extends AppCompatActivity implements Callback<List<Boa
             Log.d("List Error", error.getCause().toString());
         }
     };
+
+    Callback<List<Card>> cardCallback = new Callback<List<Card>>() {
+        @Override
+        public void success(List<Card> cards, Response response) {
+            for (Card card : cards) {
+                Log.d("Card name: ", card.getName());
+            }
+        }
+
+        @Override
+        public void failure(RetrofitError error) {
+
+        }
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
