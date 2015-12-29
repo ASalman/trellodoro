@@ -25,3 +25,17 @@ proguard/
 
 # Log Files
 *.log
+
+# Files created by IntelliJ IDEA,
+*.iml
+/.idea/workspace.xml
+/.idea/libraries
+
+# Android Studio captures folder
+captures/
+
+# Android Studio Navigation editor temp files
+.navigation/
+
+# OSX files
+.DS_Store
