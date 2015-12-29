@@ -37,12 +37,27 @@ public class MainActivity extends AppCompatActivity implements Callback<List<Boa
         public void success(List<Card> cards, Response response) {
             for (Card card : cards) {
                 Log.d("Card name: ", card.getName());
+                if ("567d2dab9e398c90a1f32663".equals(card.getId())){
+                    RestClient.getCardServices().updateCardList(card.getId(), "5659c2f09d3e7726b3478680" , cardUpdateCallback);
+                }
             }
         }
 
         @Override
         public void failure(RetrofitError error) {
+            Log.d("Card list Error", error.getCause().toString());
+        }
+    };
 
+    Callback<Card> cardUpdateCallback = new Callback<Card>() {
+        @Override
+        public void success(Card card, Response response) {
+            Log.d("Update card done", card.getId().toString());
+        }
+
+        @Override
+        public void failure(RetrofitError error) {
+            Log.d("Update card error", error.getCause().toString());
         }
     };
 
