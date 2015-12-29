@@ -3,6 +3,7 @@ package com.asalman.trellodoro.restapi;
 
 import com.asalman.trellodoro.BuildConfig;
 import com.asalman.trellodoro.restapi.service.BoardServices;
+import com.asalman.trellodoro.restapi.service.ListServices;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -24,6 +25,7 @@ public class RestClient
     private final static String GOON_DEFAULT_DATETIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
 
     private static BoardServices boardService;
+    private static ListServices listService;
     private static RestAdapter restAdapter;
 
     private RestClient() { }
@@ -71,4 +73,15 @@ public class RestClient
         return boardService;
     }
 
+    /**
+     * Build ListServices object which allow user to call all list services
+     * @return ListServices
+     */
+    public static ListServices getListServices()
+    {
+        if (listService == null){
+            listService = getRestAdapter().create(ListServices.class);
+        }
+        return listService;
+    }
 }
