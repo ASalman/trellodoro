@@ -1,8 +1,11 @@
 package com.asalman.trellodoro.ui.activities;
 
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.asalman.trellodoro.R;
 import com.asalman.trellodoro.models.Board;
@@ -67,7 +70,16 @@ public class MainActivity extends AppCompatActivity implements Callback<List<Boa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        RestClient.getBoardServices().getAllBoards(this);
+        //RestClient.getBoardServices().getAllBoards(this);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ConfigWizardActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override
