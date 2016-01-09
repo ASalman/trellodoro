@@ -15,7 +15,7 @@ import com.asalman.trellodoro.R;
 
 
 
-public class ListsFragment extends Fragment {
+public class ColumnsFragment extends Fragment {
 
     private static final String ARG_POSITION = "Position";
 
@@ -23,8 +23,8 @@ public class ListsFragment extends Fragment {
     private RelativeLayout mLayout;
 
 
-    public static ListsFragment newInstance(int position) {
-        ListsFragment f = new ListsFragment();
+    public static ColumnsFragment newInstance(int position) {
+        ColumnsFragment f = new ColumnsFragment();
         Bundle b = new Bundle();
         b.putInt(ARG_POSITION, position);
         f.setArguments(b);
