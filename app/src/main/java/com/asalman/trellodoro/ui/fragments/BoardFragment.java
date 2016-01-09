@@ -6,10 +6,24 @@ import android.support.v4.view.ViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 
 
 import com.asalman.trellodoro.R;
+import com.asalman.trellodoro.bus.BusProvider;
+import com.asalman.trellodoro.events.WizardPageFinishedEvent;
+import com.asalman.trellodoro.events.api.BoardsLoadedEvent;
+import com.asalman.trellodoro.events.api.LoadBoardEvent;
+import com.asalman.trellodoro.models.Board;
+import com.asalman.trellodoro.rest.Config;
+import com.asalman.trellodoro.ui.widgets.NothingSelectedSpinnerAdapter;
+import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
+
+import java.util.ArrayList;
 
 
 public class BoardFragment extends Fragment {
@@ -18,12 +32,15 @@ public class BoardFragment extends Fragment {
 
     private int mPosition;
     private RelativeLayout mLayout;
+    private ArrayList<Board> boardsList = new ArrayList<>();
+    private ArrayAdapter<Board> boardsAdapter;
+    private Spinner spinner;
+    private Bus bus = BusProvider.getInstance();
 
-
-    public static BoardFragment newInstance(int position) {
+    public static BoardFragment newInstance(int mPosition) {
         BoardFragment f = new BoardFragment();
         Bundle b = new Bundle();
-        b.putInt(ARG_POSITION, position);
+        b.putInt(ARG_POSITION, mPosition);
         f.setArguments(b);
         return f;
     }
@@ -34,10 +51,24 @@ public class BoardFragment extends Fragment {
         mPosition = getArguments().getInt(ARG_POSITION);
     }
 
+    @Subscribe
+    public void onBoardsLoaded(BoardsLoadedEvent event) {
+        boardsList.clear();
+        boardsList.addAll(event.getBoards());
+        boardsAdapter.notifyDataSetChanged();
+    }
 
     @Override
     public void onResume() {
         super.onResume();
+        bus.register(this);
+        bus.post(new LoadBoardEvent());
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        bus.unregister(this);
     }
 
     @Override
@@ -47,7 +78,26 @@ public class BoardFragment extends Fragment {
                 container, false);
         mLayout = (RelativeLayout) rootView
                 .findViewById(R.id.fragment_wizard_board);
+        spinner = (Spinner) rootView.findViewById(R.id.spinnerstate);
+        boardsAdapter = new ArrayAdapter<>(this.getActivity(),  R.layout.spinner_item, boardsList);
+        boardsAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spinner.setPrompt("Please select");
+        spinner.setAdapter(new NothingSelectedSpinnerAdapter(boardsAdapter, R.layout.spinner_item_noselect,
+                this.getActivity()));
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int spinnerPosition, long id) {
+                if (spinner.getSelectedItem() != null) {
+                    Config.setDoardID(((Board) spinner.getSelectedItem()).getId());
+                    bus.post(new WizardPageFinishedEvent(mPosition, BoardFragment.this));
+                }
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         ViewCompat.setElevation(rootView, 50);
         return rootView;
     }

@@ -87,4 +87,8 @@ package com.asalman.trellodoro.models;
         return this;
     }
 
+    @Override
+    public String toString() {
+        return getName();
+    }
 }

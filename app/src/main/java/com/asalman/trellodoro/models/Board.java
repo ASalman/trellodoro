@@ -46,4 +46,9 @@ public class Board {
         this.mId = id;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return this.getName();
+    }
 }

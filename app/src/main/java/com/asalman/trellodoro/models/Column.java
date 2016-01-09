@@ -67,4 +67,8 @@ public class Column {
         return this;
     }
 
+    @Override
+    public String toString() {
+        return getName();
+    }
 }
