@@ -3,6 +3,8 @@ package com.asalman.trellodoro.application;
 import android.app.Application;
 import android.content.Context;
 
+import com.asalman.trellodoro.rest.AccessToken;
+
 import net.danlew.android.joda.JodaTimeAndroid;
 
 /**
@@ -10,6 +12,7 @@ import net.danlew.android.joda.JodaTimeAndroid;
  */
 public class MyApplication extends Application {
     private static MyApplication instance;
+    private static AccessToken accessToken;
 
     public MyApplication() {
         super();
@@ -28,5 +31,12 @@ public class MyApplication extends Application {
 
     public static Context getContext() {
         return instance;
+    }
+
+    public static AccessToken getAccessToken(){
+        if (accessToken == null){
+            accessToken = new AccessToken();
+        }
+        return accessToken;
     }
 }
