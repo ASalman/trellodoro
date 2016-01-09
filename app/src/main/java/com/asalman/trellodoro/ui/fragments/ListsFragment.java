@@ -17,10 +17,10 @@ import com.asalman.trellodoro.R;
 
 public class ListsFragment extends Fragment {
 
-    private static final String ARG_POSITION = "position";
+    private static final String ARG_POSITION = "Position";
 
-    private int position;
-    private RelativeLayout layout;
+    private int mPosition;
+    private RelativeLayout mLayout;
 
 
     public static ListsFragment newInstance(int position) {
@@ -34,7 +34,7 @@ public class ListsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        position = getArguments().getInt(ARG_POSITION);
+        mPosition = getArguments().getInt(ARG_POSITION);
     }
 
 
@@ -44,7 +44,7 @@ public class ListsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_wizard_lists,
                 container, false);
-        layout = (RelativeLayout) rootView
+        mLayout = (RelativeLayout) rootView
                 .findViewById(R.id.fragment_wizard_lists);
 
 

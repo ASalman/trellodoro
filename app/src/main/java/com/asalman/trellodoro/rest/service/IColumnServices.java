@@ -11,7 +11,7 @@ import retrofit.http.Path;
 /**
  * Created by asalman on 12/30/15.
  */
-public interface ColumnServices {
+public interface IColumnServices {
 
     @GET("/boards/{board_id}/lists")
     public void getBoardLists(@Path("board_id") String board_id, Callback<List<Column>> response);

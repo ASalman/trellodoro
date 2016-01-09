@@ -19,32 +19,32 @@ import com.asalman.trellodoro.ui.fragments.OAuthFragment;
  * Created by asalman on 1/3/16.
  */
 public class ConfigWizardActivity extends AppCompatActivity {
-    private MyPagerAdapter adapter;
-    private ViewPager pager;
-    private TextView previousButton;
-    private TextView nextButton;
-    private TextView navigator;
-    private int currentItem;
+    private MyPagerAdapter mAdapter;
+    private ViewPager mPager;
+    private TextView mPreviousButton;
+    private TextView mNextButton;
+    private TextView mNavigator;
+    private int mCurrentItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wizard_config);
 
-        currentItem = 0;
+        mCurrentItem = 0;
 
-        pager = (ViewPager) findViewById(R.id.activity_wizard_universal_pager);
-        previousButton = (TextView) findViewById(R.id.activity_wizard_universal_previous);
-        nextButton = (TextView) findViewById(R.id.activity_wizard_universal_next);
-        navigator = (TextView) findViewById(R.id.activity_wizard_universal_possition);
+        mPager = (ViewPager) findViewById(R.id.activity_wizard_universal_pager);
+        mPreviousButton = (TextView) findViewById(R.id.activity_wizard_universal_previous);
+        mNextButton = (TextView) findViewById(R.id.activity_wizard_universal_next);
+        mNavigator = (TextView) findViewById(R.id.activity_wizard_universal_possition);
 
-        adapter = new MyPagerAdapter(getSupportFragmentManager());
-        pager.setAdapter(adapter);
-        pager.setCurrentItem(currentItem);
+        mAdapter = new MyPagerAdapter(getSupportFragmentManager());
+        mPager.setAdapter(mAdapter);
+        mPager.setCurrentItem(mCurrentItem);
 
         setNavigator();
 
-        pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             @Override
             public void onPageSelected(int position) {
@@ -65,13 +65,13 @@ public class ConfigWizardActivity extends AppCompatActivity {
             }
         });
 
-        previousButton.setOnClickListener(new View.OnClickListener() {
+        mPreviousButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-				/*if (pager.getCurrentItem() != 0) {
-					pager.setCurrentItem(pager.getCurrentItem() - 1);
+				/*if (mPager.getCurrentItem() != 0) {
+					mPager.setCurrentItem(mPager.getCurrentItem() - 1);
 				}
 				setNavigator();*/
                 Toast.makeText(ConfigWizardActivity.this, "Skip",
@@ -79,13 +79,13 @@ public class ConfigWizardActivity extends AppCompatActivity {
             }
         });
 
-        nextButton.setOnClickListener(new View.OnClickListener() {
+        mNextButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                if (pager.getCurrentItem() != (pager.getAdapter().getCount() - 1)) {
-                    pager.setCurrentItem(pager.getCurrentItem() + 1);
+                if (mPager.getCurrentItem() != (mPager.getAdapter().getCount() - 1)) {
+                    mPager.setCurrentItem(mPager.getCurrentItem() + 1);
                 } else {
                     Toast.makeText(ConfigWizardActivity.this, "Finish",
                             Toast.LENGTH_SHORT).show();
@@ -101,22 +101,22 @@ public class ConfigWizardActivity extends AppCompatActivity {
 
     public void setNavigator() {
         String navigation = "";
-        for (int i = 0; i < adapter.getCount(); i++) {
-            if (i == pager.getCurrentItem()) {
+        for (int i = 0; i < mAdapter.getCount(); i++) {
+            if (i == mPager.getCurrentItem()) {
                 navigation += " .  ";
             } else {
                 navigation +=   " o ";
             }
         }
-        navigator.setText(navigation);
+        mNavigator.setText(navigation);
     }
 
     public void setCurrentSlidePosition(int position) {
-        this.currentItem = position;
+        this.mCurrentItem = position;
     }
 
     public int getCurrentSlidePosition() {
-        return this.currentItem;
+        return this.mCurrentItem;
     }
 
 

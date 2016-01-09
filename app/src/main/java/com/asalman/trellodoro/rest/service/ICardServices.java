@@ -16,7 +16,7 @@ import retrofit.http.Path;
 /**
  * Created by asalman on 12/30/15.
  */
-public interface CardServices {
+public interface ICardServices {
 
     @GET("/lists/{list_id}/cards")
     public void getListCards(@Path("list_id") String list_id, Callback<List<Card>> response);

@@ -19,16 +19,13 @@ import com.asalman.trellodoro.R;
 
 public class OAuthFragment extends Fragment {
 
-    private static final String ARG_POSITION = "position";
+    private static final String ARG_POSITION = "Position";
 
-    private int position;
-    private RelativeLayout layout;
-    private WebView webView;
-    private ProgressDialog pd;
-    private String authorizationToken;
-
-    private String redirectUri="https://api.souq.com/oauth/authorize/";
-    private String scopes="customer_profile,cart_management,customer_demographics,customer_profile,cart_management,customer_demographics";
+    private int mPosition;
+    private RelativeLayout mLayout;
+    private WebView mWebView;
+    private ProgressDialog mProgressDialog;
+    private String mAuthorizationToken;
 
 
 
@@ -43,7 +40,7 @@ public class OAuthFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        position = getArguments().getInt(ARG_POSITION);
+        mPosition = getArguments().getInt(ARG_POSITION);
 
     }
 
@@ -52,10 +49,10 @@ public class OAuthFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_wizard_oauth,
                 container, false);
-        layout = (RelativeLayout) rootView
+        mLayout = (RelativeLayout) rootView
                 .findViewById(R.id.fragment_wizard_oauth);
 
-        webView = (WebView) rootView.findViewById(R.id.webView);
+        mWebView = (WebView) rootView.findViewById(R.id.webView);
 
 
 
@@ -69,18 +66,18 @@ public class OAuthFragment extends Fragment {
     void OAuth(View rootView){
         //connection=new SouqAPIConnection(MyApplication.CLIENT_ID,MyApplication.API_KEY_SOUQ,this);
 
-        webView.requestFocus(View.FOCUS_DOWN);
-        webView.getSettings().setJavaScriptEnabled(true);
-        pd = ProgressDialog.show(this.getContext(), "", "Loading...",true);
+        mWebView.requestFocus(View.FOCUS_DOWN);
+        mWebView.getSettings().setJavaScriptEnabled(true);
+        mProgressDialog = ProgressDialog.show(this.getContext(), "", "Loading...",true);
 
-        webView.setWebViewClient(new WebViewClient() {
+        mWebView.setWebViewClient(new WebViewClient() {
 
             @Override
             public void onPageFinished(WebView view, String url) {
                 //This method will be executed each time a page finished loading.
                 //The only we do is dismiss the progressDialog, in case we are showing any.
-                if (pd != null && pd.isShowing()) {
-                    pd.dismiss();
+                if (mProgressDialog != null && mProgressDialog.isShowing()) {
+                    mProgressDialog.dismiss();
                 }
             }
 
@@ -91,20 +88,18 @@ public class OAuthFragment extends Fragment {
                     Uri uri = Uri.parse(url);
 
                     String path = uri.toString();
-                    Log.i("token",path);
-                    authorizationToken = path.substring(path.indexOf("token=")+6);
-                    if (authorizationToken == null) {
+                    Log.i("token", path);
+                    mAuthorizationToken = path.substring(path.indexOf("token=") + 6);
+                    if (mAuthorizationToken == null) {
                         Log.i("Authorize", "The user doesn't allow authorization.");
                         return true;
                     }
-                    Log.i("Authorize", "Auth token received: " + authorizationToken);
-
-
+                    Log.i("Authorize", "Auth token received: " + mAuthorizationToken);
 
 
                 } else {
                     Log.i("Authorize", "Redirecting to: " + url);
-                    webView.loadUrl(url);
+                    mWebView.loadUrl(url);
                 }
                 return true;
             }
@@ -112,8 +107,8 @@ public class OAuthFragment extends Fragment {
 
         String authUrl = "https://trello.com/1/authorize?callback_method=fragment&return_url=http://178.62.240.44/returnurl&scope=read%2Cwrite&expiration=never&name=PomodoroTrelloApp&key=f96a5b377b72a9818ecd86f6a5bfda25";
         Log.i("Authorize", "Loading Auth Url: " + authUrl);
-        //Load the authorization URL into the webView
-        webView.loadUrl(authUrl);
+        //Load the authorization URL into the mWebView
+        mWebView.loadUrl(authUrl);
     }
 
     @Override

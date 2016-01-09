@@ -11,7 +11,7 @@ import retrofit.http.GET;
 /**
  * Created by asalman on 12/30/15.
  */
-public interface BoardServices {
+public interface IBoardServices {
 
     @GET("/members/me/boards")
     public void getAllBoards(Callback<List<Board>> response);

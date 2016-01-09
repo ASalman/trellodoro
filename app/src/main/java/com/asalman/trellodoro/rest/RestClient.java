@@ -2,9 +2,9 @@ package com.asalman.trellodoro.rest;
 
 
 import com.asalman.trellodoro.BuildConfig;
-import com.asalman.trellodoro.rest.service.BoardServices;
-import com.asalman.trellodoro.rest.service.CardServices;
-import com.asalman.trellodoro.rest.service.ColumnServices;
+import com.asalman.trellodoro.rest.service.IBoardServices;
+import com.asalman.trellodoro.rest.service.ICardServices;
+import com.asalman.trellodoro.rest.service.IColumnServices;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -25,9 +25,9 @@ public class RestClient
     private final static String USER_TOKEN = "368c59f10c5e0b47d6fd70d61b43b036309037bb2ad9d7b7e02e4b6fe18609fa";
     private final static String GOON_DEFAULT_DATETIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
 
-    private static BoardServices boardService;
-    private static ColumnServices listService;
-    private static CardServices cardService;
+    private static IBoardServices boardService;
+    private static IColumnServices listService;
+    private static ICardServices cardService;
     private static RestAdapter restAdapter;
 
     private RestClient() { }
@@ -67,10 +67,10 @@ public class RestClient
      * Build BoardServices object which allow user to call all board services
      * @return BoardServices
      */
-    public static BoardServices getBoardServices()
+    public static IBoardServices getBoardServices()
     {
         if (boardService == null){
-            boardService = getRestAdapter().create(BoardServices.class);
+            boardService = getRestAdapter().create(IBoardServices.class);
         }
         return boardService;
     }
@@ -79,10 +79,10 @@ public class RestClient
      * Build ListServices object which allow user to call all list services
      * @return ListServices
      */
-    public static ColumnServices getColumnServices()
+    public static IColumnServices getColumnServices()
     {
         if (listService == null){
-            listService = getRestAdapter().create(ColumnServices.class);
+            listService = getRestAdapter().create(IColumnServices.class);
         }
         return listService;
     }
@@ -91,10 +91,10 @@ public class RestClient
      * Build CardServices object which allow user to call all card services
      * @return CArdServices
      */
-    public static CardServices getCardServices()
+    public static ICardServices getCardServices()
     {
         if (cardService == null){
-            cardService = getRestAdapter().create(CardServices.class);
+            cardService = getRestAdapter().create(ICardServices.class);
         }
         return cardService;
     }
