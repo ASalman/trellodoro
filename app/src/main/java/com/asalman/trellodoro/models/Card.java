@@ -6,84 +6,84 @@ package com.asalman.trellodoro.models;
 
     public class Card {
 
-    private String mId;
-    private String mIdList;
-    private String mName;
-    private Double mPos;
+    private String id;
+    private String idList;
+    private String name;
+    private Double pos;
 
     /**
-     * @return The mId
+     * @return The id
      */
     public String getId() {
-        return mId;
+        return id;
     }
 
     /**
-     * @param id The mId
+     * @param id The id
      */
     public void setId(String id) {
-        this.mId = id;
+        this.id = id;
     }
 
     public Card withId(String id) {
-        this.mId = id;
+        this.id = id;
         return this;
     }
 
     /**
-     * @return The mIdList
+     * @return The idList
      */
     public String getIdList() {
-        return mIdList;
+        return idList;
     }
 
     /**
-     * @param idList The mIdList
+     * @param idList The idList
      */
     public void setIdList(String idList) {
-        this.mIdList = idList;
+        this.idList = idList;
     }
 
     public Card withIdList(String idList) {
-        this.mIdList = idList;
+        this.idList = idList;
         return this;
     }
 
     /**
-     * @return The mName
+     * @return The name
      */
     public String getName() {
-        return mName;
+        return name;
     }
 
     /**
-     * @param name The mName
+     * @param name The name
      */
     public void setName(String name) {
-        this.mName = name;
+        this.name = name;
     }
 
     public Card withName(String name) {
-        this.mName = name;
+        this.name = name;
         return this;
     }
 
     /**
-     * @return The mPos
+     * @return The pos
      */
-    public Double getmPos() {
-        return mPos;
+    public Double getPos() {
+        return pos;
     }
 
     /**
-     * @param mPos The mPos
+     * @param pos The pos
      */
-    public void setmPos(Double mPos) {
-        this.mPos = mPos;
+    public void setPos(Double pos) {
+        this.pos = pos;
     }
 
     public Card withPos(Double pos) {
-        this.mPos = pos;
+        this.pos = pos;
         return this;
     }
 

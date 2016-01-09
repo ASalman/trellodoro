@@ -88,11 +88,11 @@ public class ConfigWizardActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 if (mPager.getCurrentItem() != (mPager.getAdapter().getCount() - 1)) {
                     mPager.setCurrentItem(mPager.getCurrentItem() + 1);
                 } else {
                     setResult(1);
+                    ((ColumnsFragment)mAdapter.getItem(2)).finish();
                     Toast.makeText(ConfigWizardActivity.this, "Finish",
                             Toast.LENGTH_SHORT).show();
                     finish();
@@ -130,6 +130,7 @@ public class ConfigWizardActivity extends AppCompatActivity {
         if (onPageFinishedEvent.getPosition() == 0){
             mPager.setCurrentItem(1);
         } else if (onPageFinishedEvent.getPosition() == 1) {
+            mAdapter.listsFragment.populateLists();
             mPager.setCurrentItem(2);
         }
         setNavigator();

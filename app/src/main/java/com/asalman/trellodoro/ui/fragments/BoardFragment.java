@@ -35,7 +35,7 @@ public class BoardFragment extends Fragment {
     private ArrayList<Board> boardsList = new ArrayList<>();
     private ArrayAdapter<Board> boardsAdapter;
     private Spinner spinner;
-    private Bus bus = BusProvider.getInstance();
+    private Bus mBus = BusProvider.getInstance();
 
     public static BoardFragment newInstance(int mPosition) {
         BoardFragment f = new BoardFragment();
@@ -61,14 +61,14 @@ public class BoardFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        bus.register(this);
-        bus.post(new LoadBoardEvent());
+        mBus.register(this);
+        mBus.post(new LoadBoardEvent());
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        bus.unregister(this);
+        mBus.unregister(this);
     }
 
     @Override
@@ -89,7 +89,7 @@ public class BoardFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int spinnerPosition, long id) {
                 if (spinner.getSelectedItem() != null) {
                     Config.setDoardID(((Board) spinner.getSelectedItem()).getId());
-                    bus.post(new WizardPageFinishedEvent(mPosition, BoardFragment.this));
+                    mBus.post(new WizardPageFinishedEvent(mPosition, BoardFragment.this));
                 }
             }
 

@@ -6,44 +6,44 @@ package com.asalman.trellodoro.models;
 
 public class Board {
 
-    private String mName;
-    private String mId;
+    private String name;
+    private String id;
 
     /**
-     * @return The mName
+     * @return The name
      */
     public String getName() {
-        return mName;
+        return name;
     }
 
     /**
-     * @param name The mName
+     * @param name The name
      */
     public void setName(String name) {
-        this.mName = name;
+        this.name = name;
     }
 
     public Board withName(String name) {
-        this.mName = name;
+        this.name = name;
         return this;
     }
 
     /**
-     * @return The mId
+     * @return The id
      */
     public String getId() {
-        return mId;
+        return id;
     }
 
     /**
-     * @param id The mId
+     * @param id The id
      */
     public void setId(String id) {
-        this.mId = id;
+        this.id = id;
     }
 
     public Board withId(String id) {
-        this.mId = id;
+        this.id = id;
         return this;
     }
 

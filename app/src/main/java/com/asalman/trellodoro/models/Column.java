@@ -6,64 +6,64 @@ package com.asalman.trellodoro.models;
 
 public class Column {
 
-    private String mId;
-    private String mName;
-    private Integer mPos;
+    private String id;
+    private String name;
+    private Integer pos;
 
     /**
-     * @return The mId
+     * @return The id
      */
     public String getId() {
-        return mId;
+        return id;
     }
 
     /**
-     * @param id The mId
+     * @param id The id
      */
     public void setId(String id) {
-        this.mId = id;
+        this.id = id;
     }
 
     public Column withId(String id) {
-        this.mId = id;
+        this.id = id;
         return this;
     }
 
     /**
-     * @return The mName
+     * @return The name
      */
     public String getName() {
-        return mName;
+        return name;
     }
 
     /**
-     * @param name The mName
+     * @param name The name
      */
     public void setName(String name) {
-        this.mName = name;
+        this.name = name;
     }
 
     public Column withName(String name) {
-        this.mName = name;
+        this.name = name;
         return this;
     }
 
     /**
-     * @return The mPos
+     * @return The pos
      */
     public Integer getPos() {
-        return mPos;
+        return pos;
     }
 
     /**
-     * @param pos The mPos
+     * @param pos The pos
      */
     public void setPos(Integer pos) {
-        this.mPos = pos;
+        this.pos = pos;
     }
 
     public Column withPos(Integer pos) {
-        this.mPos = pos;
+        this.pos = pos;
         return this;
     }
 
