@@ -15,6 +15,10 @@ import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
 
 import com.asalman.trellodoro.R;
+import com.asalman.trellodoro.application.MyApplication;
+import com.asalman.trellodoro.bus.BusProvider;
+import com.asalman.trellodoro.events.WizardPageFinishedEvent;
+import com.squareup.otto.Bus;
 
 
 public class OAuthFragment extends Fragment {
@@ -26,6 +30,7 @@ public class OAuthFragment extends Fragment {
     private WebView mWebView;
     private ProgressDialog mProgressDialog;
     private String mAuthorizationToken;
+    private Bus mBus = BusProvider.getInstance();
 
 
 
@@ -55,11 +60,9 @@ public class OAuthFragment extends Fragment {
         mWebView = (WebView) rootView.findViewById(R.id.webView);
 
 
-
         ViewCompat.setElevation(rootView, 50);
         return rootView;
     }
-
 
 
 
@@ -88,14 +91,15 @@ public class OAuthFragment extends Fragment {
                     Uri uri = Uri.parse(url);
 
                     String path = uri.toString();
-                    Log.i("token", path);
-                    mAuthorizationToken = path.substring(path.indexOf("token=") + 6);
+                    Log.i("token",path);
+                    mAuthorizationToken = path.substring(path.indexOf("token=")+6);
                     if (mAuthorizationToken == null) {
                         Log.i("Authorize", "The user doesn't allow authorization.");
                         return true;
                     }
                     Log.i("Authorize", "Auth token received: " + mAuthorizationToken);
-
+                    MyApplication.getAccessToken().setValue(mAuthorizationToken);
+                    mBus.post(new WizardPageFinishedEvent(mPosition, OAuthFragment.this));
 
                 } else {
                     Log.i("Authorize", "Redirecting to: " + url);
@@ -107,7 +111,7 @@ public class OAuthFragment extends Fragment {
 
         String authUrl = "https://trello.com/1/authorize?callback_method=fragment&return_url=http://178.62.240.44/returnurl&scope=read%2Cwrite&expiration=never&name=PomodoroTrelloApp&key=f96a5b377b72a9818ecd86f6a5bfda25";
         Log.i("Authorize", "Loading Auth Url: " + authUrl);
-        //Load the authorization URL into the mWebView
+        //Load the authorization URL into the webView
         mWebView.loadUrl(authUrl);
     }
 

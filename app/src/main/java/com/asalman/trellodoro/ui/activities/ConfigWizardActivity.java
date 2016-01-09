@@ -11,9 +11,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.asalman.trellodoro.R;
+import com.asalman.trellodoro.bus.BusProvider;
+import com.asalman.trellodoro.events.WizardPageFinishedEvent;
 import com.asalman.trellodoro.ui.fragments.BoardFragment;
-import com.asalman.trellodoro.ui.fragments.ListsFragment;
+import com.asalman.trellodoro.ui.fragments.ColumnsFragment;
 import com.asalman.trellodoro.ui.fragments.OAuthFragment;
+import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
 
 /**
  * Created by asalman on 1/3/16.
@@ -25,6 +29,7 @@ public class ConfigWizardActivity extends AppCompatActivity {
     private TextView mNextButton;
     private TextView mNavigator;
     private int mCurrentItem;
+    private Bus bus = BusProvider.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +92,7 @@ public class ConfigWizardActivity extends AppCompatActivity {
                 if (mPager.getCurrentItem() != (mPager.getAdapter().getCount() - 1)) {
                     mPager.setCurrentItem(mPager.getCurrentItem() + 1);
                 } else {
+                    setResult(1);
                     Toast.makeText(ConfigWizardActivity.this, "Finish",
                             Toast.LENGTH_SHORT).show();
                     finish();
@@ -119,13 +125,34 @@ public class ConfigWizardActivity extends AppCompatActivity {
         return this.mCurrentItem;
     }
 
+    @Subscribe
+    public void onPageFinished(WizardPageFinishedEvent onPageFinishedEvent){
+        if (onPageFinishedEvent.getPosition() == 0){
+            mPager.setCurrentItem(1);
+        } else if (onPageFinishedEvent.getPosition() == 1) {
+            mPager.setCurrentItem(2);
+        }
+        setNavigator();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        bus.register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        bus.unregister(this);
+    }
 
 
     public class MyPagerAdapter extends FragmentPagerAdapter {
 
         OAuthFragment oAuthFragment = OAuthFragment.newInstance(0);
         BoardFragment boardFragment = BoardFragment.newInstance(1);
-        ListsFragment listsFragment = ListsFragment.newInstance(2);
+        ColumnsFragment listsFragment = ColumnsFragment.newInstance(2);
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
