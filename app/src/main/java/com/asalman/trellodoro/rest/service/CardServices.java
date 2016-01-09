@@ -1,4 +1,4 @@
-package com.asalman.trellodoro.restapi.service;
+package com.asalman.trellodoro.rest.service;
 
 
 

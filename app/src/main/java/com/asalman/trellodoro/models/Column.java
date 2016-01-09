@@ -4,7 +4,7 @@ package com.asalman.trellodoro.models;
  * Created by asalman on 12/30/15.
  */
 
-public class List {
+public class Column {
 
     private String id;
     private String name;
@@ -24,7 +24,7 @@ public class List {
         this.id = id;
     }
 
-    public List withId(String id) {
+    public Column withId(String id) {
         this.id = id;
         return this;
     }
@@ -43,7 +43,7 @@ public class List {
         this.name = name;
     }
 
-    public List withName(String name) {
+    public Column withName(String name) {
         this.name = name;
         return this;
     }
@@ -62,7 +62,7 @@ public class List {
         this.pos = pos;
     }
 
-    public List withPos(Integer pos) {
+    public Column withPos(Integer pos) {
         this.pos = pos;
         return this;
     }

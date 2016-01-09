@@ -10,7 +10,8 @@ import android.view.View;
 import com.asalman.trellodoro.R;
 import com.asalman.trellodoro.models.Board;
 import com.asalman.trellodoro.models.Card;
-import com.asalman.trellodoro.restapi.RestClient;
+import com.asalman.trellodoro.models.Column;
+import com.asalman.trellodoro.rest.RestClient;
 
 import java.util.List;
 
@@ -20,10 +21,10 @@ import retrofit.client.Response;
 
 public class MainActivity extends AppCompatActivity implements Callback<List<Board>> {
 
-    Callback<List<com.asalman.trellodoro.models.List>> listCallback = new Callback<List<com.asalman.trellodoro.models.List>>() {
+    Callback<List<Column>> listCallback = new Callback<List<Column>>() {
         @Override
-        public void success(List<com.asalman.trellodoro.models.List> lists, Response response) {
-            for (com.asalman.trellodoro.models.List list : lists){
+        public void success(List<Column> lists, Response response) {
+            for (Column list : lists){
                 Log.d("List name: ", list.getName());
                 RestClient.getCardServices().getListCards(list.getId(), cardCallback);
             }
@@ -86,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements Callback<List<Boa
     public void success(List<Board> boards, Response response) {
         for (Board board : boards){
             Log.d("Board", board.getName());
-            RestClient.getListServices().getBoardLists(board.getId(), listCallback);
+            RestClient.getColumnServices().getBoardLists(board.getId(), listCallback);
         }
     }
 

@@ -1,10 +1,10 @@
-package com.asalman.trellodoro.restapi;
+package com.asalman.trellodoro.rest;
 
 
 import com.asalman.trellodoro.BuildConfig;
-import com.asalman.trellodoro.restapi.service.BoardServices;
-import com.asalman.trellodoro.restapi.service.CardServices;
-import com.asalman.trellodoro.restapi.service.ListServices;
+import com.asalman.trellodoro.rest.service.BoardServices;
+import com.asalman.trellodoro.rest.service.CardServices;
+import com.asalman.trellodoro.rest.service.ColumnServices;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -26,7 +26,7 @@ public class RestClient
     private final static String GOON_DEFAULT_DATETIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
 
     private static BoardServices boardService;
-    private static ListServices listService;
+    private static ColumnServices listService;
     private static CardServices cardService;
     private static RestAdapter restAdapter;
 
@@ -79,10 +79,10 @@ public class RestClient
      * Build ListServices object which allow user to call all list services
      * @return ListServices
      */
-    public static ListServices getListServices()
+    public static ColumnServices getColumnServices()
     {
         if (listService == null){
-            listService = getRestAdapter().create(ListServices.class);
+            listService = getRestAdapter().create(ColumnServices.class);
         }
         return listService;
     }
