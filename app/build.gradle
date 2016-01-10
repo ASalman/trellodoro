@@ -29,4 +29,5 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:2.4.0'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'net.danlew:android.joda:2.7.2'
+    compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
 }
