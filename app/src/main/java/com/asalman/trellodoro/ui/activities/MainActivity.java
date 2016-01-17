@@ -12,12 +12,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.View;
-import android.widget.TextView;
 
 
 import com.asalman.trellodoro.R;
 import com.asalman.trellodoro.bus.BusProvider;
-import com.asalman.trellodoro.rest.Config;
+import com.asalman.trellodoro.preferences.Config;
 import com.asalman.trellodoro.ui.fragments.TabTasksListFragment;
 import com.astuetz.PagerSlidingTabStrip;
 import com.squareup.otto.Bus;

@@ -17,7 +17,7 @@ import com.asalman.trellodoro.bus.BusProvider;
 import com.asalman.trellodoro.events.api.ColumnsLoadedEvent;
 import com.asalman.trellodoro.events.api.LoadColumnsEvent;
 import com.asalman.trellodoro.models.Column;
-import com.asalman.trellodoro.rest.Config;
+import com.asalman.trellodoro.preferences.Config;
 import com.asalman.trellodoro.ui.widgets.NothingSelectedSpinnerAdapter;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
