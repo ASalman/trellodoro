@@ -12,12 +12,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.View;
-import android.widget.TextView;
 
 
 import com.asalman.trellodoro.R;
 import com.asalman.trellodoro.bus.BusProvider;
-import com.asalman.trellodoro.rest.Config;
+import com.asalman.trellodoro.events.api.LoadCardsEvent;
+import com.asalman.trellodoro.preferences.Config;
 import com.asalman.trellodoro.ui.fragments.TabTasksListFragment;
 import com.astuetz.PagerSlidingTabStrip;
 import com.squareup.otto.Bus;
@@ -66,10 +66,19 @@ public class MainActivity extends AppCompatActivity {
         });
 
         if (Config.getDoingListID().equals("")){
-            //Intent intent = new Intent(MainActivity.this, ConfigWizardActivity.class);
-            //startActivityForResult(intent,0);
+            Intent intent = new Intent(MainActivity.this, ConfigWizardActivity.class);
+            startActivityForResult(intent,0);
         }
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // @// TODO: this must be done on more proper way now I just want to go to sleep
+        mBus.post(new LoadCardsEvent(Config.getTodoListID()));
+        mBus.post(new LoadCardsEvent(Config.getDoingListID()));
+        mBus.post(new LoadCardsEvent(Config.getDoingListID()));
     }
 
     @Override

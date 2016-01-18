@@ -3,13 +3,19 @@ package com.asalman.trellodoro.models;
 /**
  * Created by asalman on 12/30/15.
  */
-
-    public class Card {
+public class Card {
 
     private String id;
     private String idList;
     private String name;
-    private Double pos;
+    private double pos;
+    private int previousState;
+    private int currentState;
+    private long remainingTime;
+    private long lastPomodoroTime;
+    private long nextPomodoroTime;
+    private int spentPomodoros;
+    private long totalSpentTime;
 
     /**
      * @return The id
@@ -71,24 +77,81 @@ package com.asalman.trellodoro.models;
     /**
      * @return The pos
      */
-    public Double getPos() {
+    public double getPos() {
         return pos;
     }
 
     /**
      * @param pos The pos
      */
-    public void setPos(Double pos) {
+    public void setPos(double pos) {
         this.pos = pos;
     }
 
-    public Card withPos(Double pos) {
+    public Card withPos(int pos) {
         this.pos = pos;
         return this;
+    }
+
+    public int getPreviousState() {
+        return previousState;
+    }
+
+    public void setPreviousState(int previousState) {
+        this.previousState = previousState;
+    }
+
+    public int getCurrentState() {
+        return currentState;
+    }
+
+    public void setCurrentState(int currentState) {
+        this.currentState = currentState;
+    }
+
+    public long getRemainingTime() {
+        return remainingTime;
+    }
+
+    public void setRemainingTime(long remainingTime) {
+        this.remainingTime = remainingTime;
+    }
+
+    public long getNextPomodoroTime() {
+        return nextPomodoroTime;
+    }
+
+    public void setNextPomodoroTime(long nextPomodoroTime) {
+        this.nextPomodoroTime = nextPomodoroTime;
+    }
+
+    public int getSpentPomodoros() {
+        return spentPomodoros;
+    }
+
+    public void setSpentPomodoros(int spentPomodoros) {
+        this.spentPomodoros = spentPomodoros;
+    }
+
+    public long getTotalSpentTime() {
+        return totalSpentTime;
+    }
+
+    public void setTotalSpentTime(long totalSpentTime) {
+        this.totalSpentTime = totalSpentTime;
+    }
+
+    public long getLastPomodoroTime() {
+        return lastPomodoroTime;
+    }
+
+    public void setLastPomodoroTime(long lastPomodoroTime) {
+        this.lastPomodoroTime = lastPomodoroTime;
     }
 
     @Override
     public String toString() {
         return getName();
     }
+
 }

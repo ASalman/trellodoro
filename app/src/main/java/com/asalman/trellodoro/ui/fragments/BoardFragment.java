@@ -18,7 +18,7 @@ import com.asalman.trellodoro.events.WizardPageFinishedEvent;
 import com.asalman.trellodoro.events.api.BoardsLoadedEvent;
 import com.asalman.trellodoro.events.api.LoadBoardEvent;
 import com.asalman.trellodoro.models.Board;
-import com.asalman.trellodoro.rest.Config;
+import com.asalman.trellodoro.preferences.Config;
 import com.asalman.trellodoro.ui.widgets.NothingSelectedSpinnerAdapter;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;

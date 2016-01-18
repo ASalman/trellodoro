@@ -1,15 +1,20 @@
 package com.asalman.trellodoro.ui.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.asalman.trellodoro.R;
+import com.asalman.trellodoro.application.MyApplication;
 import com.asalman.trellodoro.models.Card;
+import com.asalman.trellodoro.pomodoro.Pomodoro;
+import com.asalman.trellodoro.ui.activities.PomodoroActivity;
 
 import java.util.List;
 
@@ -63,11 +68,22 @@ public class TaskListAdapter extends ArrayAdapter<Card>
 
     @Override
     public void onClick(View v) {
-        // TODO Auto-generated method stub
-        int possition = (Integer) v.getTag();
+        int position = (Integer) v.getTag();
+        Card item = getItem(position);
         switch (v.getId()) {
             case R.id.btn_test:
-                // click on explore button
+                Pomodoro pomodoro = MyApplication.getPomodoro();
+                if (pomodoro != null) {
+                    if (pomodoro.getState() != Pomodoro.States.NONE &&
+                            !pomodoro.getID().equals(item.getId())) {
+                        Toast.makeText(getContext(), item.getName(), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+                Toast.makeText(getContext(), item.getName(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this.getContext(), PomodoroActivity.class);
+                intent.putExtra(PomodoroActivity.EXTRA_CARD_ID, item.getId());
+                this.getContext().startActivity(intent);
                 break;
         }
     }

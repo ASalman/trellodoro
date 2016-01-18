@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">Trellodoro</string>
+
+
+
+    <string name="timeleft_less_than_minute"><![CDATA[< 1 min]]></string>
+    <plurals name="timeleft_minutes">
+        <item quantity="one">1 mint</item>
+        <item quantity="other">%d mints</item>
+    </plurals>
+
+    <string name="lbl_start_pomodoro">Start</string>
+    <string name="lbl_short_break">Short Break</string>
+    <string name="lbl_long_break">Long Break</string>
+    <string name="lbl_stop">Stop</string>
+    <string name="lbl_pause">Pause</string>
+    <string name="lbl_restart">Restart</string>
+    <string name="lbl_done">Done</string>
+    <string name="lbl_todo">To Do</string>
 </resources>
