@@ -3,14 +3,21 @@
     package="com.asalman.trellodoro">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:name=".application.MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_trellodoro"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:launchMode="singleInstance"
+        android:clearTaskOnLaunch="true"
+        android:theme="@style/AppTheme"
+        android:windowSoftInputMode="stateHidden">
         <activity
             android:name=".ui.activities.MainActivity"
             android:clearTaskOnLaunch="true"
@@ -20,13 +27,33 @@
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
+            android:name=".ui.activities.PomodoroActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".ui.activities.ConfigWizardActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <receiver
+            android:name=".receiver.NotificationReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter android:priority="100">
+                <action android:name="com.asalman.trellodoro.action.START" />
+                <action android:name="com.asalman.trellodoro.action.STOP" />
+                <action android:name="com.asalman.trellodoro.action.PAUSE" />
+                <action android:name="com.asalman.trellodoro.action.RESTART" />
+                <action android:name="com.asalman.trellodoro.action.DISMISS" />
+                <action android:name="com.asalman.trellodoro.action.UPDATE" />
+                <action android:name="com.asalman.trellodoro.action.ALARM" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".services.NotificationService" />
+        <service android:name=".services.TimerService" />
     </application>
 
 </manifest>
