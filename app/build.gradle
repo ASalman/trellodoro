@@ -30,4 +30,6 @@ dependencies {
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'net.danlew:android.joda:2.7.2'
     compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
+    compile 'com.akexorcist:RoundCornerProgressBar:2.0.3'
+    compile 'com.github.medyo:fancybuttons:1.5@aar'
 }

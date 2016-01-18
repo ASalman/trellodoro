@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
 import com.asalman.trellodoro.R;
 import com.asalman.trellodoro.application.MyApplication;
 import com.asalman.trellodoro.bus.BusProvider;
@@ -27,19 +28,21 @@ import com.squareup.otto.Subscribe;
 
 import org.joda.time.DateTime;
 
+import mehdi.sakout.fancybuttons.FancyButton;
+
 public class PomodoroActivity extends AppCompatActivity implements View.OnClickListener {
 
 
     public static final String EXTRA_CARD_ID = "EXTRA_CARD_ID";
 
     Pomodoro mPomodoro;
+    RoundCornerProgressBar mProgress;
     Card mCard;
     Bus mBus = BusProvider.getInstance();
-    Button btnPomodoroStart,btnPomodoroStop, btnPomodoroRestart, btnPomodoroPause,
+    FancyButton btnPomodoroStart,btnPomodoroStop, btnPomodoroRestart, btnPomodoroPause,
             btnLongBreak, btnShortBreak, btnDone, btnTodo;
     TextView mTime;
     TextView mDescription;
-    private int colorPrimary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,14 +74,15 @@ public class PomodoroActivity extends AppCompatActivity implements View.OnClickL
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        btnDone = (Button) findViewById(R.id.btn_task_done);
-        btnTodo = (Button) findViewById(R.id.btn_task_todo);
-        btnLongBreak = (Button) findViewById(R.id.btn_long_break);
-        btnShortBreak = (Button) findViewById(R.id.btn_short_break);
-        btnPomodoroPause = (Button) findViewById(R.id.btn_pomodoro_pause);
-        btnPomodoroRestart = (Button) findViewById(R.id.btn_pomodoro_restart);
-        btnPomodoroStart = (Button) findViewById(R.id.btn_pomodoro_start);
-        btnPomodoroStop = (Button) findViewById(R.id.btn_pomodoro_stop);
+        btnDone = (FancyButton) findViewById(R.id.btn_task_done);
+        btnTodo = (FancyButton) findViewById(R.id.btn_task_todo);
+        btnLongBreak = (FancyButton) findViewById(R.id.btn_long_break);
+        btnShortBreak = (FancyButton) findViewById(R.id.btn_short_break);
+        btnPomodoroPause = (FancyButton) findViewById(R.id.btn_pomodoro_pause);
+        btnPomodoroRestart = (FancyButton) findViewById(R.id.btn_pomodoro_restart);
+        btnPomodoroStart = (FancyButton) findViewById(R.id.btn_pomodoro_start);
+        btnPomodoroStop = (FancyButton) findViewById(R.id.btn_pomodoro_stop);
+        mProgress = (RoundCornerProgressBar) findViewById(R.id.progress);
         this.setTitle(mCard.getName());
 
         mTime = (TextView) findViewById(R.id.pomodoro_time);
@@ -126,6 +130,10 @@ public class PomodoroActivity extends AppCompatActivity implements View.OnClickL
     @UiThread
     public void updateUIOnTimerUpdate(){
 
+        float progress = 1 -
+                (float) (mPomodoro.getNextPomodoro().getMillis() - DateTime.now().getMillis())
+                        / mPomodoro.getCurrentDuration();
+        mProgress.setProgress(progress * 100);
         if (mPomodoro.isOngoing()) {
             final DateTime nextPomodoro = mPomodoro.getNextPomodoro();
 
@@ -164,7 +172,8 @@ public class PomodoroActivity extends AppCompatActivity implements View.OnClickL
     }
 
     public void start() {
-
+        mProgress.setProgress(0);
+        mProgress.setMax(100);
         if (mPomodoro.isOngoing()) {
             sendBroadcast(NotificationService.STOP_INTENT);
         } else {

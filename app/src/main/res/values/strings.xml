@@ -17,4 +17,22 @@
     <string name="lbl_restart">Restart</string>
     <string name="lbl_done">Done</string>
     <string name="lbl_todo">To Do</string>
+
+    <!-- App Icons -->
+    <string name="icon_coffee">&#xe800;</string>
+    <string name="icon_beer">&#xe801;</string>
+    <string name="icon_play">&#xe802;</string>
+    <string name="icon_stop">&#xe803;</string>
+    <string name="icon_pause">&#xe804;</string>
+    <string name="icon_restart">&#xe805;</string>
+    <string name="icon_full_dot">&#xe806;</string>
+    <string name="icon_empty_dot">&#xe807;</string>
+    <string name="icon_next">&#xe808;</string>
+    <string name="icon_back">&#xe809;</string>
+    <string name="icon_check">&#xe80a;</string>
+    <string name="icon_like">&#xe80b;</string>
+    <string name="icon_undo">&#xe80c;</string>
+    <string name="icon_board">&#xe80d;</string>
+    <string name="icon_list">&#xe80e;</string>
+    <string name="icon_config">&#xe80f;</string>
 </resources>

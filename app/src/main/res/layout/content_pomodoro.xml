@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,7 +9,17 @@
     tools:context=".ui.activities.PomodoroActivity"
     tools:showIn="@layout/activity_pomodoro">
 
-
+    <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+        android:id="@+id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_alignParentTop="true"
+        app:rcBackgroundColor="@android:color/transparent"
+        app:rcBackgroundPadding="0dp"
+        app:rcMax="100"
+        app:rcProgress="50"
+        app:rcProgressColor="@color/colorAccent"
+        app:rcRadius="1dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +29,7 @@
         android:orientation="vertical"
         tools:showIn="@layout/activity_main">
 
-        <TextView
+        <com.asalman.trellodoro.ui.widgets.DigitalTextView
             android:id="@+id/pomodoro_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -100,35 +111,41 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <Button
+            <mehdi.sakout.fancybuttons.FancyButton
                 android:id="@+id/btn_pomodoro_start"
                 style="@style/trellodoro_button"
-                android:text="@string/lbl_start_pomodoro" />
+                fancy:fb_fontIconResource="@string/icon_play"
+                fancy:fb_text="@string/lbl_start_pomodoro" />
 
-            <Button
+            <mehdi.sakout.fancybuttons.FancyButton
                 android:id="@+id/btn_pomodoro_stop"
                 style="@style/trellodoro_button"
-                android:text="@string/lbl_stop" />
+                fancy:fb_fontIconResource="@string/icon_stop"
+                fancy:fb_text="@string/lbl_stop" />
 
-            <Button
+            <mehdi.sakout.fancybuttons.FancyButton
                 android:id="@+id/btn_short_break"
                 style="@style/trellodoro_button"
-                android:text="@string/lbl_short_break" />
+                fancy:fb_fontIconResource="@string/icon_coffee"
+                fancy:fb_text="@string/lbl_short_break" />
 
-            <Button
+            <mehdi.sakout.fancybuttons.FancyButton
                 android:id="@+id/btn_long_break"
                 style="@style/trellodoro_button"
-                android:text="@string/lbl_long_break" />
+                fancy:fb_fontIconResource="@string/icon_beer"
+                fancy:fb_text="@string/lbl_long_break" />
 
-            <Button
+            <mehdi.sakout.fancybuttons.FancyButton
                 android:id="@+id/btn_pomodoro_pause"
                 style="@style/trellodoro_button"
-                android:text="@string/lbl_pause" />
+                fancy:fb_fontIconResource="@string/icon_pause"
+                fancy:fb_text="@string/lbl_pause" />
 
-            <Button
+            <mehdi.sakout.fancybuttons.FancyButton
                 android:id="@+id/btn_pomodoro_restart"
                 style="@style/trellodoro_button"
-                android:text="@string/lbl_restart" />
+                fancy:fb_fontIconResource="@string/icon_restart"
+                fancy:fb_text="@string/lbl_restart" />
         </LinearLayout>
 
         <LinearLayout
@@ -137,15 +154,17 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <Button
+            <mehdi.sakout.fancybuttons.FancyButton
                 android:id="@+id/btn_task_todo"
                 style="@style/trellodoro_button"
-                android:text="@string/lbl_todo" />
+                fancy:fb_fontIconResource="@string/icon_undo"
+                fancy:fb_text="@string/lbl_todo" />
 
-            <Button
+            <mehdi.sakout.fancybuttons.FancyButton
                 android:id="@+id/btn_task_done"
                 style="@style/trellodoro_button"
-                android:text="@string/lbl_done" />
+                fancy:fb_fontIconResource="@string/icon_like"
+                fancy:fb_text="@string/lbl_done" />
         </LinearLayout>
     </LinearLayout>
 

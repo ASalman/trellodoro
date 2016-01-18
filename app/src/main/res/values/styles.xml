@@ -24,6 +24,15 @@
         <item name="android:paddingRight">5dp</item>
         <item name="android:paddingTop">10dp</item>
         <item name="android:layout_margin">5dp</item>
+        <item name="fb_iconFont">appicons.ttf</item>
+        <item name="fb_fontIconSize">20sp</item>
+        <item name="fb_borderColor">#FFFFFF</item>
+        <item name="fb_borderWidth">1dp</item>
+        <item name="fb_defaultColor">#7ab800</item>
+        <item name="fb_focusColor">#9bd823</item>
+        <item name="fb_iconPosition">left</item>
+        <item name="fb_radius">30dp</item>
+        <item name="fb_textColor">#FFFFFF</item>
     </style>
 
 </resources>
