@@ -1,9 +1,15 @@
 package com.asalman.trellodoro.application;
 
+import android.app.AlarmManager;
 import android.app.Application;
 import android.content.Context;
+import android.support.v4.app.NotificationManagerCompat;
 
 import com.asalman.trellodoro.bus.BusProvider;
+import com.asalman.trellodoro.db.DatabaseHelper;
+import com.asalman.trellodoro.pomodoro.DBPomodoroStorage;
+import com.asalman.trellodoro.pomodoro.Pomodoro;
+import com.asalman.trellodoro.preferences.Config;
 import com.asalman.trellodoro.rest.AccessToken;
 import com.asalman.trellodoro.rest.service.BoardServices;
 import com.asalman.trellodoro.rest.service.CardServices;
@@ -16,10 +22,12 @@ import net.danlew.android.joda.JodaTimeAndroid;
  */
 public class MyApplication extends Application {
     private static MyApplication instance;
+    private static Pomodoro mPomodoro;
     private static AccessToken accessToken;
     private BoardServices boardServices;
     private CardServices cardServices;
     private ColumnServices columnServices;
+    private DatabaseHelper databaseHelper;
 
     public MyApplication() {
         super();
@@ -33,6 +41,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         JodaTimeAndroid.init(this);
+        databaseHelper = new DatabaseHelper(this);
     }
 
     public static MyApplication getApp() {
@@ -48,5 +57,34 @@ public class MyApplication extends Application {
             accessToken = new AccessToken();
         }
         return accessToken;
+    }
+
+    public static NotificationManagerCompat provideNotificationManager() {
+        return NotificationManagerCompat.from(getApp());
+    }
+
+    public static AlarmManager provideAlarmManager() {
+        return (AlarmManager) getApp().getSystemService(Context.ALARM_SERVICE);
+    }
+
+    public static Pomodoro getPomodoro(){
+        if (mPomodoro == null  && ! "".equals(Config.getActiveCardID())) {
+            mPomodoro = new Pomodoro(new DBPomodoroStorage(Config.getActiveCardID()));
+        }
+        return mPomodoro;
+    }
+
+    public static void setPomodoro(Pomodoro pomodoro){
+        mPomodoro = pomodoro;
+    }
+
+    public DatabaseHelper getDatabaseHelper(){
+        return this.databaseHelper;
+    }
+
+    @Override
+    public void onTerminate() {
+        this.databaseHelper.close();
+        super.onTerminate();
     }
 }
