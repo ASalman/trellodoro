@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +16,9 @@ import com.asalman.trellodoro.application.MyApplication;
 import com.asalman.trellodoro.models.Card;
 import com.asalman.trellodoro.pomodoro.Pomodoro;
 import com.asalman.trellodoro.ui.activities.PomodoroActivity;
+import com.asalman.trellodoro.utils.DateTimeUtils;
+
+import org.joda.time.DateTime;
 
 import java.util.List;
 
@@ -31,13 +35,17 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
     static class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mTitle;
-        public final TextView mTestButton;
+        public final TextView mTotalTime;
+        public final TextView mTotalPomodoros;
+        public final Button mTestButton;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
             mTitle = (TextView) view.findViewById(R.id.txt_title);
-            mTestButton = (TextView) view.findViewById(R.id.btn_test);
+            mTotalTime = (TextView) view.findViewById(R.id.txt_totaltime);
+            mTotalPomodoros = (TextView) view.findViewById(R.id.txt_totalpomodoros);
+            mTestButton = (Button) view.findViewById(R.id.btn_test);
         }
 
         @Override
@@ -68,6 +76,10 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
 
         holder.mView.setTag(position);
         holder.mTitle.setText(card.getName());
+        DateTime dateTime = new DateTime(card.getTotalSpentTime());
+        String totalTimerFormmated = DateTimeUtils.getTimeFormatted(dateTime);
+        holder.mTotalTime.setText(String.format(mContext.getString(R.string.txt_total_time), totalTimerFormmated));
+        holder.mTotalPomodoros.setText(String.format(mContext.getString(R.string.txt_total_pomos), card.getSpentPomodoros()));
         holder.mTestButton.setTag(position);
     }
 

@@ -8,4 +8,5 @@
     <color name="secondary_text">@color/material_grey_700</color>
     <color name="icons">@color/material_white</color>
     <color name="divider">@color/material_grey_400</color>
+    <color name="list_background">@color/material_grey_100</color>
 </resources>

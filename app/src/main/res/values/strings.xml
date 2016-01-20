@@ -17,8 +17,8 @@
     <string name="lbl_done">Done</string>
     <string name="lbl_todo">To Do</string>
 
-    <string name="txt_total_time">10 mints</string>
-    <string name="txt_total_pomos">10 Pomodoros</string>
+    <string name="txt_total_time">Total Time: %s</string>
+    <string name="txt_total_pomos">Pomodoros: %d</string>
 
     <!-- App Icons -->
     <string name="icon_coffee">&#xe800;</string>
