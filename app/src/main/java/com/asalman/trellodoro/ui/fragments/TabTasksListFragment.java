@@ -4,6 +4,8 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -83,24 +85,12 @@ public class TabTasksListFragment extends Fragment {
                 container, false);
         ViewCompat.setElevation(rootView, 50);
 
-        ListView listView = (ListView) rootView.findViewById(R.id.list_view);
-
+        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.list_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         taskListAdapter = new TaskListAdapter(this.getActivity(), cardsList);
 
 
-        listView.setClipToPadding(false);
-        listView.setDivider(null);
-        Resources r = getResources();
-        int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-                8, r.getDisplayMetrics());
-        listView.setDividerHeight(px);
-        listView.setFadingEdgeLength(0);
-        listView.setFitsSystemWindows(true);
-        px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 12,
-                r.getDisplayMetrics());
-        listView.setPadding(px, px, px, px);
-        listView.setScrollBarStyle(ListView.SCROLLBARS_OUTSIDE_OVERLAY);
-        listView.setAdapter(taskListAdapter);
+        recyclerView.setAdapter(taskListAdapter);
 
         if (position == 0){
             listID = Config.getTodoListID();

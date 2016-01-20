@@ -2,10 +2,10 @@ package com.asalman.trellodoro.ui.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,69 +21,79 @@ import java.util.List;
 /**
  * Created by asalman on 01/10/16.
  */
-public class TaskListAdapter extends ArrayAdapter<Card>
+public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHolder>
         implements View.OnClickListener {
 
     private LayoutInflater mInflater;
+    private Context mContext;
+    private List<Card> mCards;
+
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        public final View mView;
+        public final TextView mTitle;
+        public final TextView mTestButton;
+
+        public ViewHolder(View view) {
+            super(view);
+            mView = view;
+            mTitle = (TextView) view.findViewById(R.id.txt_title);
+            mTestButton = (TextView) view.findViewById(R.id.btn_test);
+        }
+
+        @Override
+        public String toString() {
+            return super.toString() + " '" + mTitle.getText();
+        }
+    }
 
     public TaskListAdapter(Context context, List<Card> items) {
-        super(context, 0, items);
+        this.mContext = context;
+        this.mCards = items;
         mInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
-    public long getItemId(int position) {
-        return (long)(getItem(position).getPos() * 1000 );
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.list_item_tasks, parent, false);
+        TaskListAdapter.ViewHolder viewHolder = new ViewHolder(view);
+        viewHolder.mTestButton.setOnClickListener(this);
+        return viewHolder;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        final ViewHolder holder;
-        if (convertView == null) {
-            convertView = mInflater.inflate(
-                    R.layout.list_item_tasks, parent, false);
-            holder = new ViewHolder();
-            holder.title = (TextView) convertView
-                    .findViewById(R.id.txt_title);
-            holder.test = (TextView) convertView
-                    .findViewById(R.id.btn_test);
-            holder.test.setOnClickListener(this);
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        Card card = mCards.get(position);
 
-        Card item = getItem(position);
-        holder.title.setText(item.getName());
-        holder.test.setTag(position);
-
-        return convertView;
+        holder.mView.setTag(position);
+        holder.mTitle.setText(card.getName());
+        holder.mTestButton.setTag(position);
     }
 
-    private static class ViewHolder {
-        public TextView title;
-        public TextView test;
+    @Override
+    public int getItemCount() {
+        return (null != mCards ? mCards.size() : 0);
     }
 
     @Override
     public void onClick(View v) {
         int position = (Integer) v.getTag();
-        Card item = getItem(position);
+        Card item = mCards.get(position);
         switch (v.getId()) {
             case R.id.btn_test:
                 Pomodoro pomodoro = MyApplication.getPomodoro();
                 if (pomodoro != null) {
                     if (pomodoro.getState() != Pomodoro.States.NONE &&
                             !pomodoro.getID().equals(item.getId())) {
-                        Toast.makeText(getContext(), item.getName(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, item.getName(), Toast.LENGTH_SHORT).show();
                         return;
                     }
                 }
-                Toast.makeText(getContext(), item.getName(), Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(this.getContext(), PomodoroActivity.class);
+                Toast.makeText(mContext, item.getName(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(mContext, PomodoroActivity.class);
                 intent.putExtra(PomodoroActivity.EXTRA_CARD_ID, item.getId());
-                this.getContext().startActivity(intent);
+                this.mContext.startActivity(intent);
                 break;
         }
     }

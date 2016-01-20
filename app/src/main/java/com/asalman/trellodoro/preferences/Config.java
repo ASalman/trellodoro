@@ -15,6 +15,7 @@ public class Config {
         public static final String DOING_LIST_ID = "doing_list_id";
         public static final String DONE_LIST_ID = "done_list_id";
         public static final String ACTIVE_CARD_ID = "active_card_id";
+        public static final String NOTIFICATION_ENABLED = "notification_enabled";
     }
 
 
@@ -59,5 +60,13 @@ public class Config {
 
     public static void setActiveCardID(String id){
         HelperSharedPreferences.putString(MyApplication.getApp().getBaseContext(), PreferencesKeys.ACTIVE_CARD_ID, id);
+    }
+
+    public static boolean isNotificationEnabled(){
+        return HelperSharedPreferences.getBoolean(MyApplication.getApp().getBaseContext(), PreferencesKeys.NOTIFICATION_ENABLED, true);
+    }
+
+    public static void setNotificationEnabled(boolean enabled){
+        HelperSharedPreferences.putBoolean(MyApplication.getApp().getBaseContext(), PreferencesKeys.NOTIFICATION_ENABLED, enabled);
     }
 }
