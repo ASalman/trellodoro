@@ -10,8 +10,10 @@ import android.widget.ListAdapter;
 import android.widget.SpinnerAdapter;
 
 /**
- * Decorator Adapter to allow a Spinner to show a 'Nothing Selected...' initially
- * displayed instead of the first choice in the Adapter.
+ * Decorator Adapter to allow a Spinner to show a 'Nothing Selected...' initially displayed instead
+ * of the first choice in the Adapter.
+ *
+ * Adapted from http://stackoverflow.com/a/12221309/120930
  */
 public class NothingSelectedSpinnerAdapter implements SpinnerAdapter, ListAdapter {
 
@@ -23,30 +25,22 @@ public class NothingSelectedSpinnerAdapter implements SpinnerAdapter, ListAdapte
     protected LayoutInflater layoutInflater;
 
     /**
-     * Use this constructor to have NO 'Select One...' item, instead use
-     * the standard prompt or nothing at all.
+     * Use this constructor to have NO 'Select One...' item, instead use the standard prompt or nothing at all
      * @param spinnerAdapter wrapped Adapter.
-     * @param nothingSelectedLayout layout for nothing selected, perhaps
-     * you want text grayed out like a prompt...
+     * @param nothingSelectedLayout layout for nothing selected, perhaps you want text grayed out like a prompt...
      * @param context
      */
-    public NothingSelectedSpinnerAdapter(
-            SpinnerAdapter spinnerAdapter,
-            int nothingSelectedLayout, Context context) {
-
+    public NothingSelectedSpinnerAdapter(SpinnerAdapter spinnerAdapter,
+                                         int nothingSelectedLayout, Context context) {
         this(spinnerAdapter, nothingSelectedLayout, -1, context);
     }
 
     /**
-     * Use this constructor to Define your 'Select One...' layout as the first
-     * row in the returned choices.
-     * If you do this, you probably don't want a prompt on your spinner or it'll
-     * have two 'Select' rows.
+     * Use this constructor to Define your 'Select One...' layout as the first row in the returned choices.
+     * If you do this, you probably don't want a prompt on your spinner or it'll have two 'Select' rows.
      * @param spinnerAdapter wrapped Adapter. Should probably return false for isEnabled(0)
-     * @param nothingSelectedLayout layout for nothing selected, perhaps you want
-     * text grayed out like a prompt...
-     * @param nothingSelectedDropdownLayout layout for your 'Select an Item...' in
-     * the dropdown.
+     * @param nothingSelectedLayout layout for nothing selected, perhaps you want text grayed out like a prompt...
+     * @param nothingSelectedDropdownLayout layout for your 'Select an Item...' in the dropdown
      * @param context
      */
     public NothingSelectedSpinnerAdapter(SpinnerAdapter spinnerAdapter,
@@ -60,13 +54,11 @@ public class NothingSelectedSpinnerAdapter implements SpinnerAdapter, ListAdapte
 
     @Override
     public final View getView(int position, View convertView, ViewGroup parent) {
-        // This provides the View for the Selected Item in the Spinner, not
-        // the dropdown (unless dropdownView is not set).
+        // This provides the View for the Selected Item in the Spinner, not the dropdown (unless dropdownView not set)
         if (position == 0) {
             return getNothingSelectedView(parent);
         }
-        return adapter.getView(position - EXTRA, null, parent); // Could re-use
-                                                 // the convertView if possible.
+        return adapter.getView(position - EXTRA, null, parent); // could re-use the convertView if possible
     }
 
     /**
@@ -81,21 +73,16 @@ public class NothingSelectedSpinnerAdapter implements SpinnerAdapter, ListAdapte
 
     @Override
     public View getDropDownView(int position, View convertView, ViewGroup parent) {
-        // BUG! Vote to fix!! http://code.google.com/p/android/issues/detail?id=17128 -
-        // Spinner does not support multiple view types
+        // BUG! Vote to fix!! http://code.google.com/p/android/issues/detail?id=17128 - Spinner does not support multiple view types
         if (position == 0) {
-            return nothingSelectedDropdownLayout == -1 ?
-              new View(context) :
-              getNothingSelectedDropdownView(parent);
+            return nothingSelectedDropdownLayout == -1 ? new View(context) : getNothingSelectedDropdownView(parent);
         }
 
-        // Could re-use the convertView if possible, use setTag...
-        return adapter.getDropDownView(position - EXTRA, null, parent);
+        return adapter.getDropDownView(position - EXTRA, null, parent);  // could re-use the convertView if possible, utilize setTag...
     }
 
     /**
-     * Override this to do something dynamic... For example, "Pick your favorite
-     * of these 37".
+     * Override this to do something dynamic... e.g. "Pick your Favorite of these 37"
      * @param parent
      * @return
      */
@@ -116,23 +103,17 @@ public class NothingSelectedSpinnerAdapter implements SpinnerAdapter, ListAdapte
 
     @Override
     public int getItemViewType(int position) {
-        // Doesn't work!! Vote to Fix! http://code.google.com/p/android/issues/detail?id=17128 -
-        // Spinner does not support multiple view types
-        // This method determines what is the convertView, this should
-        // return 1 for pos 0 or return 0 otherwise.
-        return position == 0 ?
-               getViewTypeCount() - EXTRA :
-               adapter.getItemViewType(position - EXTRA);
+        return 0;
     }
 
     @Override
     public int getViewTypeCount() {
-        return adapter.getViewTypeCount() + EXTRA;
+        return 1;
     }
 
     @Override
     public long getItemId(int position) {
-        return adapter.getItemId(position - EXTRA);
+        return position >= EXTRA ? adapter.getItemId(position - EXTRA) : position - EXTRA;
     }
 
     @Override
@@ -162,8 +143,6 @@ public class NothingSelectedSpinnerAdapter implements SpinnerAdapter, ListAdapte
 
     @Override
     public boolean isEnabled(int position) {
-        return position == 0 ? false : true; // Don't allow the 'nothing selected'
-                                             // item to be picked.
+        return position == 0 ? false : true; // don't allow the 'nothing selected' item to be picked
     }
-
 }
