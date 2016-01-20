@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">Trellodoro</string>
-
-
+    <string name="sample_title">Sample Title</string>
 
     <string name="timeleft_less_than_minute"><![CDATA[< 1 min]]></string>
     <plurals name="timeleft_minutes">
@@ -17,6 +16,9 @@
     <string name="lbl_restart">Restart</string>
     <string name="lbl_done">Done</string>
     <string name="lbl_todo">To Do</string>
+
+    <string name="txt_total_time">10 mints</string>
+    <string name="txt_total_pomos">10 Pomodoros</string>
 
     <!-- App Icons -->
     <string name="icon_coffee">&#xe800;</string>
@@ -35,4 +37,10 @@
     <string name="icon_board">&#xe80d;</string>
     <string name="icon_list">&#xe80e;</string>
     <string name="icon_config">&#xe80f;</string>
+    <string name="icon_coffee_2">&#xe810;</string>
+    <string name="icon_beer_2">&#xe811;</string>
+    <string name="icon_timer">{typcn-stopwatch}</string>
+    <string name="icon_pomo">{typcn-starburst-outline}</string>
+    <string name="icon_notifications_on">&#xe814;</string>
+    <string name="icon_notifications_off">&#xe815;</string>
 </resources>

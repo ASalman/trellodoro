@@ -22,7 +22,7 @@
             android:layout_marginRight="16dp"
             android:layout_marginTop="16dp"
             android:text="Sample title"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/primary"
             android:textSize="24sp" />
 
 
@@ -38,7 +38,7 @@
                 android:layout_margin="8dp"
                 android:padding="8dp"
                 android:text="Tes Click"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/primary"
                 android:textSize="14sp" />
 
         </LinearLayout>

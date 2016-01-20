@@ -14,6 +14,10 @@ import com.asalman.trellodoro.rest.AccessToken;
 import com.asalman.trellodoro.rest.service.BoardServices;
 import com.asalman.trellodoro.rest.service.CardServices;
 import com.asalman.trellodoro.rest.service.ColumnServices;
+import com.joanzapata.iconify.Iconify;
+import com.joanzapata.iconify.fonts.FontAwesomeModule;
+import com.joanzapata.iconify.fonts.TypiconsIcons;
+import com.joanzapata.iconify.fonts.TypiconsModule;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
@@ -32,9 +36,6 @@ public class MyApplication extends Application {
     public MyApplication() {
         super();
         instance = this;
-        boardServices = new BoardServices(BusProvider.getInstance());
-        cardServices = new CardServices(BusProvider.getInstance());
-        columnServices = new ColumnServices(BusProvider.getInstance());
     }
 
     @Override
@@ -42,6 +43,12 @@ public class MyApplication extends Application {
         super.onCreate();
         JodaTimeAndroid.init(this);
         databaseHelper = new DatabaseHelper(this);
+        boardServices = new BoardServices(BusProvider.getInstance());
+        cardServices = new CardServices(BusProvider.getInstance());
+        columnServices = new ColumnServices(BusProvider.getInstance());
+        Iconify
+                .with(new FontAwesomeModule())
+                .with(new TypiconsModule());
     }
 
     public static MyApplication getApp() {
