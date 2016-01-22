@@ -124,7 +124,7 @@ public class PomodoroNotificationBuilder extends BaseNotificationBuilder {
 
     @Override
     protected int getColor() {
-        return context.getResources().getColor(R.color.colorPrimary);
+        return context.getResources().getColor(R.color.primary);
     }
 
     @Override

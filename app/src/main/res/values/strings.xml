@@ -1,7 +1,12 @@
 <resources>
     <string name="app_name">Trellodoro</string>
-
-
+    <string name="sample_title">Sample Title</string>
+    <string name="lbl_board_title">Trello Board</string>
+    <string name="lbl_board_message">Select Trello Board You Want To Map From Dropdown Below</string>
+    <string name="lbl_list_title">Board Lists</string>
+    <string name="lbl_list_todo_message">Select To Do List</string>
+    <string name="lbl_list_doing_message">Select Doing List</string>
+    <string name="lbl_list_done_message">Select Done List</string>
 
     <string name="timeleft_less_than_minute"><![CDATA[< 1 min]]></string>
     <plurals name="timeleft_minutes">
@@ -17,4 +22,32 @@
     <string name="lbl_restart">Restart</string>
     <string name="lbl_done">Done</string>
     <string name="lbl_todo">To Do</string>
+
+    <string name="txt_total_time">Total Time: %s</string>
+    <string name="txt_total_pomos">Pomodoros: %d</string>
+    <string name="txt_plases_select">Please Select</string>
+
+    <!-- App Icons -->
+    <string name="icon_coffee">&#xe800;</string>
+    <string name="icon_beer">&#xe801;</string>
+    <string name="icon_play">&#xe802;</string>
+    <string name="icon_stop">&#xe803;</string>
+    <string name="icon_pause">&#xe804;</string>
+    <string name="icon_restart">&#xe805;</string>
+    <string name="icon_full_dot">&#xe806;</string>
+    <string name="icon_empty_dot">&#xe807;</string>
+    <string name="icon_next">&#xe808;</string>
+    <string name="icon_back">&#xe809;</string>
+    <string name="icon_check">&#xe80a;</string>
+    <string name="icon_like">&#xe80b;</string>
+    <string name="icon_undo">&#xe80c;</string>
+    <string name="icon_board">&#xe80d;</string>
+    <string name="icon_list">&#xe80e;</string>
+    <string name="icon_config">&#xe80f;</string>
+    <string name="icon_coffee_2">&#xe810;</string>
+    <string name="icon_beer_2">&#xe811;</string>
+    <string name="icon_timer">{typcn-stopwatch}</string>
+    <string name="icon_pomo">{typcn-starburst-outline}</string>
+    <string name="icon_notifications_on">&#xe814;</string>
+    <string name="icon_notifications_off">&#xe815;</string>
 </resources>

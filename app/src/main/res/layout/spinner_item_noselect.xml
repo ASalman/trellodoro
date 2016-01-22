@@ -7,5 +7,5 @@
     android:layout_height="wrap_content"
     android:ellipsize="marquee"
     android:textSize="18sp"
-    android:textColor="#808080"
+    android:textColor="@color/icons"
     android:text="Please Select" />

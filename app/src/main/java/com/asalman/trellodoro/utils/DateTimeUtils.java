@@ -34,4 +34,10 @@ public class DateTimeUtils {
         return dateTimeFormatter.print(remaining);
     }
 
+    public static String getTimeFormatted(DateTime dateTime) {
+        long remaining = dateTime.getMillis();
+        final DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("mm:ss");
+        return dateTimeFormatter.print(remaining);
+    }
+
 }
