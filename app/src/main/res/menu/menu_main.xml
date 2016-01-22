@@ -8,12 +8,14 @@
     <item
         android:id="@+id/action_notification"
         android:orderInCategory="100"
+        android:title="notification"
         android:icon="@drawable/ic_btn_play"
         app:showAsAction="always"
         />
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="200"
+        android:title="settings"
         android:icon="@drawable/ic_btn_play"
         app:showAsAction="always" />
 </menu>

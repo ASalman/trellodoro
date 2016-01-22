@@ -16,6 +16,7 @@ import com.asalman.trellodoro.pomodoro.Pomodoro;
 import com.asalman.trellodoro.pomodoro.PomodoroNotificationBuilder;
 import com.asalman.trellodoro.receiver.NotificationReceiver;
 import com.asalman.trellodoro.ui.activities.PomodoroActivity;
+import com.asalman.trellodoro.utils.Analytics;
 import com.asalman.trellodoro.utils.DateTimeUtils;
 
 import org.joda.time.DateTime;
@@ -96,6 +97,10 @@ public class NotificationService extends IntentService{
         if (!intent.getAction().equals(ACTION_DISMISS)) {
             updateNotification(this, mPomodoro, alarm);
         }
+
+        MyApplication.getAnalytics().sendEvent(Analytics.AppCategories.NOTIFICATION,
+                intent.getAction(),
+                intent.getAction().replace(getPackageName(),""));
 
         boolean complete = NotificationReceiver.completeWakefulIntent(intent);
         Log.d(NotificationService.class.getName(), "Action Called: " + intent.getAction());

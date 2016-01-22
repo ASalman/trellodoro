@@ -23,6 +23,7 @@ import com.squareup.otto.Bus;
 
 public class OAuthFragment extends Fragment {
 
+    private final static String TAG = BoardFragment.class.getName();
     private static final String ARG_POSITION = "Position";
 
     private int mPosition;
@@ -47,6 +48,12 @@ public class OAuthFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mPosition = getArguments().getInt(ARG_POSITION);
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MyApplication.getAnalytics().sendScreenView(TAG);
     }
 
     @Override

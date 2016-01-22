@@ -14,6 +14,7 @@ import android.widget.ListView;
 
 
 import com.asalman.trellodoro.R;
+import com.asalman.trellodoro.application.MyApplication;
 import com.asalman.trellodoro.bus.BusProvider;
 import com.asalman.trellodoro.events.api.CardsLoadedEvent;
 import com.asalman.trellodoro.events.api.LoadCardsEvent;
@@ -31,6 +32,7 @@ import java.util.ArrayList;
  */
 public class TabTasksListFragment extends Fragment {
 
+    private final static String TAG = TabTasksListFragment.class.getName();
     private static final String ARG_POSITION = "position";
 
 
@@ -68,6 +70,16 @@ public class TabTasksListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        String tabTag = TAG;
+        if (position == 0){
+            tabTag += "-todo";
+        } else if (position == 1) {
+            tabTag += "-doing";
+        } else if (position == 2) {
+            tabTag += "-done";
+        }
+        MyApplication.getAnalytics().sendScreenView(tabTag);
+
         bus.register(this);
         bus.post(new LoadCardsEvent(listID));
     }
@@ -88,8 +100,6 @@ public class TabTasksListFragment extends Fragment {
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.list_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         taskListAdapter = new TaskListAdapter(this.getActivity(), cardsList);
-
-
         recyclerView.setAdapter(taskListAdapter);
 
         if (position == 0){

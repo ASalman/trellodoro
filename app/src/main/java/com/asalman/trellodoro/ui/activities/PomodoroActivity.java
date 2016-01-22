@@ -21,6 +21,7 @@ import com.asalman.trellodoro.pomodoro.DBPomodoroStorage;
 import com.asalman.trellodoro.pomodoro.Pomodoro;
 import com.asalman.trellodoro.services.NotificationService;
 import com.asalman.trellodoro.services.TimerService;
+import com.asalman.trellodoro.utils.Analytics;
 import com.asalman.trellodoro.utils.DateTimeUtils;
 import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.joanzapata.iconify.IconDrawable;
@@ -36,6 +37,7 @@ public class PomodoroActivity extends AppCompatActivity implements View.OnClickL
 
 
     public static final String EXTRA_CARD_ID = "EXTRA_CARD_ID";
+    private final static String TAG = PomodoroActivity.class.getName();
 
     private class ButtonTags {
         private static final String TAG_POMODORO_START = "pomo_start";
@@ -105,6 +107,7 @@ public class PomodoroActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onResume() {
         super.onResume();
+        MyApplication.getAnalytics().sendScreenView(TAG);
         mBus.register(this);
         startService(new Intent(this, TimerService.class));
         uodateUIOnCardStateChanged();
@@ -230,6 +233,9 @@ public class PomodoroActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
+        MyApplication.getAnalytics().sendEvent(Analytics.AppCategories.CLICKS,
+                getResources().getResourceEntryName(v.getId()),
+                getResources().getResourceEntryName(v.getId()));
         MyApplication.setPomodoro(mPomodoro);
         if (ButtonTags.TAG_POMODORO_START.equals(v.getTag()) ){
             start();
