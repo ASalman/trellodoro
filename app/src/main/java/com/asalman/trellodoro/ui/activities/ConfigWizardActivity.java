@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,8 +26,7 @@ import com.squareup.otto.Subscribe;
 public class ConfigWizardActivity extends AppCompatActivity {
     private MyPagerAdapter mAdapter;
     private ViewPager mPager;
-    private TextView mPreviousButton;
-    private TextView mNextButton;
+    private Button mPreviousButton, mNextButton;
     private TextView mNavigator;
     private int mCurrentItem;
     private Bus bus = BusProvider.getInstance();
@@ -39,9 +39,9 @@ public class ConfigWizardActivity extends AppCompatActivity {
         mCurrentItem = 0;
 
         mPager = (ViewPager) findViewById(R.id.activity_wizard_universal_pager);
-        mPreviousButton = (TextView) findViewById(R.id.activity_wizard_universal_previous);
-        mNextButton = (TextView) findViewById(R.id.activity_wizard_universal_next);
-        mNavigator = (TextView) findViewById(R.id.activity_wizard_universal_possition);
+        mPreviousButton = (Button) findViewById(R.id.btn_back);
+        mNextButton = (Button) findViewById(R.id.btn_next);
+        mNavigator = (TextView) findViewById(R.id.lbl_position);
 
         mAdapter = new MyPagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mAdapter);
@@ -74,13 +74,10 @@ public class ConfigWizardActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
-				/*if (mPager.getCurrentItem() != 0) {
-					mPager.setCurrentItem(mPager.getCurrentItem() - 1);
-				}
-				setNavigator();*/
-                Toast.makeText(ConfigWizardActivity.this, "Skip",
-                        Toast.LENGTH_SHORT).show();
+                if (mPager.getCurrentItem() != 0) {
+                    mPager.setCurrentItem(mPager.getCurrentItem() - 1);
+                }
+                setNavigator();
             }
         });
 
@@ -107,11 +104,21 @@ public class ConfigWizardActivity extends AppCompatActivity {
 
     public void setNavigator() {
         String navigation = "";
+        mPreviousButton.setVisibility(View.INVISIBLE);
+        if (mPager.getCurrentItem() != 0) {
+            mPreviousButton.setVisibility(View.VISIBLE);
+        }
+        if (mPager.getCurrentItem() == mAdapter.getCount() -1) {
+            mNextButton.setText("{typcn-tick}");
+        } else {
+            mNextButton.setText("{typcn-chevron-right-outline}");
+        }
+
         for (int i = 0; i < mAdapter.getCount(); i++) {
             if (i == mPager.getCurrentItem()) {
-                navigation += " .  ";
+                navigation += " {typcn-media-record}  ";
             } else {
-                navigation +=   " o ";
+                navigation +=   " {typcn-media-record-outline} ";
             }
         }
         mNavigator.setText(navigation);

@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">Trellodoro</string>
     <string name="sample_title">Sample Title</string>
+    <string name="lbl_board_title">Trello Board</string>
+    <string name="lbl_board_message">Select Trello Board You Want To Map From Dropdown Below</string>
+    <string name="lbl_list_title">Board Lists</string>
+    <string name="lbl_list_todo_message">Select To Do List</string>
+    <string name="lbl_list_doing_message">Select Doing List</string>
+    <string name="lbl_list_done_message">Select Done List</string>
 
     <string name="timeleft_less_than_minute"><![CDATA[< 1 min]]></string>
     <plurals name="timeleft_minutes">
@@ -19,6 +25,7 @@
 
     <string name="txt_total_time">Total Time: %s</string>
     <string name="txt_total_pomos">Pomodoros: %d</string>
+    <string name="txt_plases_select">Please Select</string>
 
     <!-- App Icons -->
     <string name="icon_coffee">&#xe800;</string>

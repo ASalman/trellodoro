@@ -3,74 +3,59 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activities.ConfigWizardActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".ui.activities.ConfigWizardActivity">
+
     <android.support.v4.view.ViewPager
         android:id="@+id/activity_wizard_universal_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        tools:context=".TabMediaActivity" >
-    </android.support.v4.view.ViewPager>
+        tools:context=".TabMediaActivity" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/icons"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
         android:background="@color/primary"
-        android:orientation="vertical" >
+        android:orientation="horizontal">
 
-        <View
+        <com.joanzapata.iconify.widget.IconButton
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:background="@android:color/transparent"
+            android:minWidth="80dp"
+            android:text="{typcn-chevron-left-outline}"
+            android:textColor="@color/icons"
+            android:textSize="22sp" />
+
+        <com.joanzapata.iconify.widget.IconTextView
+            android:id="@+id/lbl_position"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/white" />
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/fab_margin"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/icons"
+            android:textSize="18sp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:background="@android:color/transparent" >
-
-            <TextView
-                android:id="@+id/activity_wizard_universal_previous"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:layout_weight="0"
-                android:gravity="center"
-                android:minWidth="80dp"
-                android:padding="16dp"
-                android:text="Skip"
-                android:textSize="12sp"/>
-
-            <TextView
-                android:id="@+id/activity_wizard_universal_possition"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:paddingBottom="0dp"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:paddingTop="0dp"
-                android:textColor="@android:color/white"
-                android:textSize="6sp" />
-
-            <TextView
-                android:id="@+id/activity_wizard_universal_next"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_margin="0dp"
-                android:layout_weight="0"
-                android:gravity="center"
-                android:minWidth="80dp"
-                android:padding="0dp"
-                android:text=">"
-                android:textSize="20sp" />
-        </LinearLayout>
+        <com.joanzapata.iconify.widget.IconButton
+            android:id="@+id/btn_next"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:background="@android:color/transparent"
+            android:minWidth="80dp"
+            android:text="{typcn-chevron-right-outline}"
+            android:textColor="@color/icons"
+            android:textSize="22sp" />
     </LinearLayout>
+
 </LinearLayout>
