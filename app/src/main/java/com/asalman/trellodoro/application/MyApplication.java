@@ -14,11 +14,13 @@ import com.asalman.trellodoro.rest.AccessToken;
 import com.asalman.trellodoro.rest.service.BoardServices;
 import com.asalman.trellodoro.rest.service.CardServices;
 import com.asalman.trellodoro.rest.service.ColumnServices;
+import com.crashlytics.android.Crashlytics;
 import com.joanzapata.iconify.Iconify;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import com.joanzapata.iconify.fonts.TypiconsIcons;
 import com.joanzapata.iconify.fonts.TypiconsModule;
 
+import io.fabric.sdk.android.Fabric;
 import net.danlew.android.joda.JodaTimeAndroid;
 
 /**
@@ -41,6 +43,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
         JodaTimeAndroid.init(this);
         databaseHelper = new DatabaseHelper(this);
         boardServices = new BoardServices(BusProvider.getInstance());

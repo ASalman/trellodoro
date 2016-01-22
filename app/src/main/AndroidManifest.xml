@@ -54,6 +54,9 @@
 
         <service android:name=".services.NotificationService" />
         <service android:name=".services.TimerService" />
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="fd63898d3a0d37c3fb8624865b2b604ecc11238b" />
     </application>
 
 </manifest>
