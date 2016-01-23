@@ -53,10 +53,6 @@ public class ColumnsFragment extends Fragment {
         mPosition = getArguments().getInt(ARG_POSITION);
     }
 
-    public void populateLists(){
-
-    }
-
     @Override
     public void onResume() {
         super.onResume();

@@ -56,7 +56,7 @@ public class PomodoroActivity extends AppCompatActivity implements View.OnClickL
     Bus mBus = BusProvider.getInstance();
     FancyButton btnPrimary, btnSecondary;
     FloatingActionButton btnDone, btnTodo;
-    TextView mTitle, mDescription;
+    TextView mTitle, mDescription, mTotalTime, mTotalPomodoros;
     Icon icon;
 
     @Override
@@ -102,8 +102,14 @@ public class PomodoroActivity extends AppCompatActivity implements View.OnClickL
 
         mDescription = (TextView) findViewById(R.id.pomodoro_description);
         mTitle = (TextView) findViewById(R.id.txt_title);
-        mTitle.setText(mCard.getName());
+        mTotalTime = (TextView) findViewById(R.id.lbl_total_time);
+        mTotalPomodoros = (TextView) findViewById(R.id.lbl_total_pomodoros);
+        DateTime dateTime = new DateTime(mCard.getTotalSpentTime());
+        String totalTimerFormmated = DateTimeUtils.getTimeFormatted(dateTime);
 
+        mTitle.setText(mCard.getName());
+        mTotalTime.setText(totalTimerFormmated);
+        mTotalPomodoros.setText("" + mCard.getSpentPomodoros());
     }
 
     @Override
@@ -150,7 +156,9 @@ public class PomodoroActivity extends AppCompatActivity implements View.OnClickL
         float progress = 1 -
                 (float) (mPomodoro.getNextPomodoro().getMillis() - DateTime.now().getMillis())
                         / mPomodoro.getCurrentDuration();
-        mProgress.setProgress((int) (progress * 100));
+        progress = (progress > 1 ? 1 : progress) * 100;
+
+        mProgress.setProgress((int) progress);
         if (mPomodoro.isOngoing()) {
             final DateTime nextPomodoro = mPomodoro.getNextPomodoro();
 
@@ -216,6 +224,13 @@ public class PomodoroActivity extends AppCompatActivity implements View.OnClickL
 
         btnDone.setOnClickListener(this);
         btnTodo.setOnClickListener(this);
+        mProgress.setProgress(0);
+        DBPomodoroStorage pomodoroStorage = new DBPomodoroStorage(mCard.getId());
+        mCard = pomodoroStorage.getCard();
+        DateTime dateTime = new DateTime(mCard.getTotalSpentTime());
+        String totalTimerFormmated = DateTimeUtils.getTimeFormatted(dateTime);
+        mTotalTime.setText(totalTimerFormmated);
+        mTotalPomodoros.setText("" + mCard.getSpentPomodoros());
     }
 
     public void start() {

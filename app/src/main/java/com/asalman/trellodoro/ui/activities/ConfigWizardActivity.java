@@ -146,7 +146,6 @@ public class ConfigWizardActivity extends AppCompatActivity {
         if (onPageFinishedEvent.getPosition() == 0){
             mPager.setCurrentItem(1);
         } else if (onPageFinishedEvent.getPosition() == 1) {
-            mAdapter.listsFragment.populateLists();
             mPager.setCurrentItem(2);
         }
         setNavigator();

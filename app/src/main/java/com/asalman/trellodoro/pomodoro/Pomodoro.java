@@ -86,14 +86,14 @@ public class Pomodoro {
 
     public void stop() {
         boolean pomodoroCompleted = false;
-        pomodoroStorage.setNextPomodoro(null);
-        pomodoroStorage.setRemainingTime(0);
         long stopTime = DateTime.now().getMillis();
         if (stopTime > pomodoroStorage.getNextPomodoro().getMillis()){
             stopTime = pomodoroStorage.getNextPomodoro().getMillis();
             pomodoroCompleted = true;
         }
         long spentTime = stopTime - pomodoroStorage.getLastPomodoro().getMillis();
+        pomodoroStorage.setNextPomodoro(null);
+        pomodoroStorage.setRemainingTime(0);
         if (pomodoroStorage.getState() == States.POMODORO) {
             pomodoroStorage.addSpentTime(spentTime);
             if (!pomodoroCompleted){
