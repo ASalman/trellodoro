@@ -16,6 +16,7 @@ import com.asalman.trellodoro.application.MyApplication;
 import com.asalman.trellodoro.models.Card;
 import com.asalman.trellodoro.pomodoro.Pomodoro;
 import com.asalman.trellodoro.ui.activities.PomodoroActivity;
+import com.asalman.trellodoro.utils.Analytics;
 import com.asalman.trellodoro.utils.DateTimeUtils;
 
 import org.joda.time.DateTime;
@@ -106,6 +107,9 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
                 Intent intent = new Intent(mContext, PomodoroActivity.class);
                 intent.putExtra(PomodoroActivity.EXTRA_CARD_ID, item.getId());
                 this.mContext.startActivity(intent);
+                MyApplication.getAnalytics().sendEvent(Analytics.AppCategories.CLICKS,
+                        "list_click",
+                        "Card List Click");
                 break;
         }
     }

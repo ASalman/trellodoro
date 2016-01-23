@@ -13,6 +13,7 @@ import android.widget.Spinner;
 
 
 import com.asalman.trellodoro.R;
+import com.asalman.trellodoro.application.MyApplication;
 import com.asalman.trellodoro.bus.BusProvider;
 import com.asalman.trellodoro.events.api.ColumnsLoadedEvent;
 import com.asalman.trellodoro.events.api.LoadColumnsEvent;
@@ -27,6 +28,7 @@ import java.util.ArrayList;
 
 public class ColumnsFragment extends Fragment {
 
+    private final static String TAG = BoardFragment.class.getName();
     private static final String ARG_POSITION = "Position";
 
     private int mPosition;
@@ -51,13 +53,10 @@ public class ColumnsFragment extends Fragment {
         mPosition = getArguments().getInt(ARG_POSITION);
     }
 
-    public void populateLists(){
-        mBus.post(new LoadColumnsEvent(Config.getBoardID()));
-    }
-
     @Override
     public void onResume() {
         super.onResume();
+        MyApplication.getAnalytics().sendScreenView(TAG);
         mBus.register(this);
     }
 

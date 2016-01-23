@@ -12,11 +12,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.asalman.trellodoro.R;
+import com.asalman.trellodoro.application.MyApplication;
 import com.asalman.trellodoro.bus.BusProvider;
 import com.asalman.trellodoro.events.WizardPageFinishedEvent;
+import com.asalman.trellodoro.preferences.Config;
 import com.asalman.trellodoro.ui.fragments.BoardFragment;
 import com.asalman.trellodoro.ui.fragments.ColumnsFragment;
 import com.asalman.trellodoro.ui.fragments.OAuthFragment;
+import com.asalman.trellodoro.utils.Analytics;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
@@ -24,6 +27,8 @@ import com.squareup.otto.Subscribe;
  * Created by asalman on 1/3/16.
  */
 public class ConfigWizardActivity extends AppCompatActivity {
+
+    private final static String TAG = ConfigWizardActivity.class.getName();
     private MyPagerAdapter mAdapter;
     private ViewPager mPager;
     private Button mPreviousButton, mNextButton;
@@ -74,6 +79,9 @@ public class ConfigWizardActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                MyApplication.getAnalytics().sendEvent(Analytics.AppCategories.CLICKS,
+                        getResources().getResourceEntryName(v.getId()),
+                        getResources().getResourceEntryName(v.getId()));
                 if (mPager.getCurrentItem() != 0) {
                     mPager.setCurrentItem(mPager.getCurrentItem() - 1);
                 }
@@ -85,13 +93,14 @@ public class ConfigWizardActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                MyApplication.getAnalytics().sendEvent(Analytics.AppCategories.CLICKS,
+                        getResources().getResourceEntryName(v.getId()),
+                        getResources().getResourceEntryName(v.getId()));
                 if (mPager.getCurrentItem() != (mPager.getAdapter().getCount() - 1)) {
                     mPager.setCurrentItem(mPager.getCurrentItem() + 1);
                 } else {
                     setResult(1);
                     ((ColumnsFragment)mAdapter.getItem(2)).finish();
-                    Toast.makeText(ConfigWizardActivity.this, "Finish",
-                            Toast.LENGTH_SHORT).show();
                     finish();
                 }
                 setNavigator();
@@ -116,7 +125,7 @@ public class ConfigWizardActivity extends AppCompatActivity {
 
         for (int i = 0; i < mAdapter.getCount(); i++) {
             if (i == mPager.getCurrentItem()) {
-                navigation += " {typcn-media-record}  ";
+                navigation += " {typcn-media-record} ";
             } else {
                 navigation +=   " {typcn-media-record-outline} ";
             }
@@ -137,7 +146,6 @@ public class ConfigWizardActivity extends AppCompatActivity {
         if (onPageFinishedEvent.getPosition() == 0){
             mPager.setCurrentItem(1);
         } else if (onPageFinishedEvent.getPosition() == 1) {
-            mAdapter.listsFragment.populateLists();
             mPager.setCurrentItem(2);
         }
         setNavigator();
@@ -146,6 +154,7 @@ public class ConfigWizardActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
+        MyApplication.getAnalytics().sendScreenView(TAG);
         bus.register(this);
     }
 

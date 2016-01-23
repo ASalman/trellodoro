@@ -7,8 +7,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.asalman.trellodoro.models.Card;
+import com.asalman.trellodoro.pomodoro.DBPomodoroStorage;
+import com.asalman.trellodoro.pomodoro.Pomodoro;
+
+import org.joda.time.DateTime;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -162,6 +167,55 @@ public class PomodoroDAL {
 
         return cards;
     }
+
+    /**
+     * get all active pomodoros
+     * */
+    public List<Card> getAllActive() {
+        List<Card> cards = new ArrayList<>();
+        String selectQuery = "SELECT  * FROM %s where %s != %d and %s != $d";
+
+        selectQuery = String.format(selectQuery,
+                TABLE_NAME ,
+                Columns.CURRENT_STATE,
+                Pomodoro.States.NONE,
+                Columns.CURRENT_STATE,
+                Pomodoro.States.PAUSED);
+
+        Log.e(LOG, selectQuery);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = this.getReadableDatabase().rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (c.moveToFirst()) {
+            do {
+                Card card = buildResult(c);
+                cards.add(card);
+            } while (c.moveToNext());
+        }
+
+        return cards;
+    }
+
+    public void validateDB(){
+        List<Card> cards = getAllActive();
+
+        for (Card card: cards) {
+            Pomodoro pomodoro = new Pomodoro(new DBPomodoroStorage(card));
+            pomodoro.stop();
+            if (card.getCurrentState() != Pomodoro.States.POMODORO){
+                pomodoro.stop();
+            } else {
+                if (card.getNextPomodoroTime() >= DateTime.now().getMillis()){
+                    pomodoro.stop();
+                } else {
+                    pomodoro.pause();
+                }
+            }
+        }
+    }
+
 
     private ContentValues getContentValues(Card card, boolean update) {
         ContentValues values = new ContentValues();

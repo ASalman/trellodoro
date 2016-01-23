@@ -12,4 +12,8 @@ public class APIErrorEvent {
     public APIErrorEvent(RetrofitError retrofitError){
         this.retrofitError = retrofitError;
     }
+
+    public RetrofitError getRetrofitError(){
+        return retrofitError;
+    }
 }

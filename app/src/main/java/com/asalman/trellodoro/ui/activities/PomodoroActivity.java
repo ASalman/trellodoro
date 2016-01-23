@@ -16,11 +16,14 @@ import com.asalman.trellodoro.application.MyApplication;
 import com.asalman.trellodoro.bus.BusProvider;
 import com.asalman.trellodoro.events.PomodoroStateChangedEvent;
 import com.asalman.trellodoro.events.TimerUpdateEvent;
+import com.asalman.trellodoro.events.api.UpdateCardEvent;
 import com.asalman.trellodoro.models.Card;
 import com.asalman.trellodoro.pomodoro.DBPomodoroStorage;
 import com.asalman.trellodoro.pomodoro.Pomodoro;
+import com.asalman.trellodoro.preferences.Config;
 import com.asalman.trellodoro.services.NotificationService;
 import com.asalman.trellodoro.services.TimerService;
+import com.asalman.trellodoro.utils.Analytics;
 import com.asalman.trellodoro.utils.DateTimeUtils;
 import com.github.lzyzsd.circleprogress.ArcProgress;
 import com.joanzapata.iconify.IconDrawable;
@@ -36,6 +39,7 @@ public class PomodoroActivity extends AppCompatActivity implements View.OnClickL
 
 
     public static final String EXTRA_CARD_ID = "EXTRA_CARD_ID";
+    private final static String TAG = PomodoroActivity.class.getName();
 
     private class ButtonTags {
         private static final String TAG_POMODORO_START = "pomo_start";
@@ -52,7 +56,7 @@ public class PomodoroActivity extends AppCompatActivity implements View.OnClickL
     Bus mBus = BusProvider.getInstance();
     FancyButton btnPrimary, btnSecondary;
     FloatingActionButton btnDone, btnTodo;
-    TextView mTitle, mDescription;
+    TextView mTitle, mDescription, mTotalTime, mTotalPomodoros;
     Icon icon;
 
     @Override
@@ -98,13 +102,20 @@ public class PomodoroActivity extends AppCompatActivity implements View.OnClickL
 
         mDescription = (TextView) findViewById(R.id.pomodoro_description);
         mTitle = (TextView) findViewById(R.id.txt_title);
-        mTitle.setText(mCard.getName());
+        mTotalTime = (TextView) findViewById(R.id.lbl_total_time);
+        mTotalPomodoros = (TextView) findViewById(R.id.lbl_total_pomodoros);
+        DateTime dateTime = new DateTime(mCard.getTotalSpentTime());
+        String totalTimerFormmated = DateTimeUtils.getTimeFormatted(dateTime);
 
+        mTitle.setText(mCard.getName());
+        mTotalTime.setText(totalTimerFormmated);
+        mTotalPomodoros.setText("" + mCard.getSpentPomodoros());
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        MyApplication.getAnalytics().sendScreenView(TAG);
         mBus.register(this);
         startService(new Intent(this, TimerService.class));
         uodateUIOnCardStateChanged();
@@ -145,7 +156,9 @@ public class PomodoroActivity extends AppCompatActivity implements View.OnClickL
         float progress = 1 -
                 (float) (mPomodoro.getNextPomodoro().getMillis() - DateTime.now().getMillis())
                         / mPomodoro.getCurrentDuration();
-        mProgress.setProgress((int) (progress * 100));
+        progress = (progress > 1 ? 1 : progress) * 100;
+
+        mProgress.setProgress((int) progress);
         if (mPomodoro.isOngoing()) {
             final DateTime nextPomodoro = mPomodoro.getNextPomodoro();
 
@@ -211,13 +224,25 @@ public class PomodoroActivity extends AppCompatActivity implements View.OnClickL
 
         btnDone.setOnClickListener(this);
         btnTodo.setOnClickListener(this);
+        mProgress.setProgress(0);
+        DBPomodoroStorage pomodoroStorage = new DBPomodoroStorage(mCard.getId());
+        mCard = pomodoroStorage.getCard();
+        DateTime dateTime = new DateTime(mCard.getTotalSpentTime());
+        String totalTimerFormmated = DateTimeUtils.getTimeFormatted(dateTime);
+        mTotalTime.setText(totalTimerFormmated);
+        mTotalPomodoros.setText("" + mCard.getSpentPomodoros());
     }
 
     public void start() {
         mProgress.setProgress(0);
+        mBus.post(new UpdateCardEvent(mCard.getId(), Config.getDoingListID()));
+        mCard.setIdList(Config.getTodoListID());
+
+
         if (mPomodoro.isOngoing()) {
             sendBroadcast(NotificationService.STOP_INTENT);
         } else {
+            Config.setActiveCardID(mCard.getId());
             int activityType = mPomodoro.getState();
             if (activityType == Pomodoro.States.NONE) {
                 activityType = Pomodoro.States.POMODORO;
@@ -230,6 +255,9 @@ public class PomodoroActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
+        MyApplication.getAnalytics().sendEvent(Analytics.AppCategories.CLICKS,
+                getResources().getResourceEntryName(v.getId()),
+                getResources().getResourceEntryName(v.getId()));
         MyApplication.setPomodoro(mPomodoro);
         if (ButtonTags.TAG_POMODORO_START.equals(v.getTag()) ){
             start();
@@ -249,6 +277,16 @@ public class PomodoroActivity extends AppCompatActivity implements View.OnClickL
         } else if (ButtonTags.TAG_POMODORO_RESTART.equals(v.getTag())) {
             final Intent startIntent = NotificationService.RESTART_INTENT;
             sendBroadcast(startIntent);
+        }
+
+        if (v.getId() == R.id.btn_task_done){
+            mBus.post(new UpdateCardEvent(mCard.getId(), Config.getDoneListID()));
+            mCard.setIdList(Config.getDoneListID());
+            finish();
+        } else if (v.getId() == R.id.btn_task_todo){
+            mBus.post(new UpdateCardEvent(mCard.getId(), Config.getTodoListID()));
+            mCard.setIdList(Config.getTodoListID());
+            finish();
         }
 
     }

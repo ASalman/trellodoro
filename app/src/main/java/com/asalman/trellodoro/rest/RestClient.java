@@ -2,6 +2,8 @@ package com.asalman.trellodoro.rest;
 
 
 import com.asalman.trellodoro.BuildConfig;
+import com.asalman.trellodoro.application.MyApplication;
+import com.asalman.trellodoro.preferences.Config;
 import com.asalman.trellodoro.rest.service.IBoardServices;
 import com.asalman.trellodoro.rest.service.ICardServices;
 import com.asalman.trellodoro.rest.service.IColumnServices;
@@ -22,7 +24,6 @@ public class RestClient
     private static final String APP_KEY_KEY = "key";
     private static final String USER_TOKEN_KEY = "token";
     private final static String APP_KEY = "f96a5b377b72a9818ecd86f6a5bfda25";
-    private final static String USER_TOKEN = "368c59f10c5e0b47d6fd70d61b43b036309037bb2ad9d7b7e02e4b6fe18609fa";
     private final static String GOON_DEFAULT_DATETIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
 
     private static IBoardServices boardService;
@@ -47,7 +48,7 @@ public class RestClient
                 @Override
                 public void intercept(RequestFacade request) {
                     request.addQueryParam(RestClient.APP_KEY_KEY, RestClient.APP_KEY);
-                    request.addQueryParam(RestClient.USER_TOKEN_KEY, RestClient.USER_TOKEN);
+                    request.addQueryParam(RestClient.USER_TOKEN_KEY, MyApplication.getAccessToken().getValue());
                 }
 
             };

@@ -16,10 +16,12 @@ import android.view.MenuItem;
 
 
 import com.asalman.trellodoro.R;
+import com.asalman.trellodoro.application.MyApplication;
 import com.asalman.trellodoro.bus.BusProvider;
 import com.asalman.trellodoro.events.api.LoadCardsEvent;
 import com.asalman.trellodoro.preferences.Config;
 import com.asalman.trellodoro.ui.fragments.TabTasksListFragment;
+import com.asalman.trellodoro.utils.Analytics;
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.squareup.otto.Bus;
@@ -29,6 +31,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
 
+    private final static String TAG = MainActivity.class.getName();
     private MyPagerAdapter adapter;
     private Toolbar toolbar;
     private TabLayout tabLayout;
@@ -56,8 +59,8 @@ public class MainActivity extends AppCompatActivity {
                 .getDisplayMetrics());
         viewPager.setPageMargin(pageMargin);
         viewPager.setCurrentItem(0);
-
-        if (Config.getDoingListID().equals("")){
+        if ("".equals(MyApplication.getAccessToken().getValue()) ||
+                "".equals(Config.getDoingListID())){
             Intent intent = new Intent(MainActivity.this, ConfigWizardActivity.class);
             startActivityForResult(intent,0);
         }
@@ -76,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
+        MyApplication.getAnalytics().sendScreenView(TAG);
         mBus.register(this);
     }
 
@@ -105,6 +109,10 @@ public class MainActivity extends AppCompatActivity {
     private void updateNotification(MenuItem item){
         if (item == null)
             return;
+        MyApplication.getAnalytics().sendEvent(Analytics.AppCategories.CLICKS,
+                getResources().getResourceEntryName(item.getItemId()),
+                item.getTitle().toString(),
+                Config.isNotificationEnabled() ? 0 : 1);
         item.setIcon(
                 new IconDrawable(this, Config.isNotificationEnabled() ? FontAwesomeIcons.fa_bell_o :
                         FontAwesomeIcons.fa_bell_slash_o)
@@ -123,6 +131,10 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             Intent intent = new Intent(MainActivity.this, ConfigWizardActivity.class);
             startActivity(intent);
+            MyApplication.getAnalytics().sendEvent(Analytics.AppCategories.CLICKS,
+                    getResources().getResourceEntryName(id),
+                    item.getTitle().toString(),
+                    id);
             //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
             //        .setAction("Action", null).show();
         } else if (id == R.id.action_notification) {
