@@ -18,6 +18,7 @@ import com.asalman.trellodoro.R;
 import com.asalman.trellodoro.application.MyApplication;
 import com.asalman.trellodoro.bus.BusProvider;
 import com.asalman.trellodoro.events.WizardPageFinishedEvent;
+import com.asalman.trellodoro.events.api.LoadBoardEvent;
 import com.squareup.otto.Bus;
 
 
@@ -106,6 +107,7 @@ public class OAuthFragment extends Fragment {
                     }
                     Log.i("Authorize", "Auth token received: " + mAuthorizationToken);
                     MyApplication.getAccessToken().setValue(mAuthorizationToken);
+                    mBus.post(new LoadBoardEvent());
                     mBus.post(new WizardPageFinishedEvent(mPosition, OAuthFragment.this));
 
                 } else {

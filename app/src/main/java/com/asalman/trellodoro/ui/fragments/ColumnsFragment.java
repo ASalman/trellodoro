@@ -54,7 +54,7 @@ public class ColumnsFragment extends Fragment {
     }
 
     public void populateLists(){
-        mBus.post(new LoadColumnsEvent(Config.getBoardID()));
+
     }
 
     @Override

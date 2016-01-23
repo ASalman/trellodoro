@@ -59,8 +59,8 @@ public class MainActivity extends AppCompatActivity {
                 .getDisplayMetrics());
         viewPager.setPageMargin(pageMargin);
         viewPager.setCurrentItem(0);
-
-        if (Config.getDoingListID().equals("")){
+        if ("".equals(MyApplication.getAccessToken().getValue()) ||
+                "".equals(Config.getDoingListID())){
             Intent intent = new Intent(MainActivity.this, ConfigWizardActivity.class);
             startActivityForResult(intent,0);
         }

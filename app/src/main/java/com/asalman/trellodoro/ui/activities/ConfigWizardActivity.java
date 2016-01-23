@@ -101,8 +101,6 @@ public class ConfigWizardActivity extends AppCompatActivity {
                 } else {
                     setResult(1);
                     ((ColumnsFragment)mAdapter.getItem(2)).finish();
-                    Toast.makeText(ConfigWizardActivity.this, "Finish",
-                            Toast.LENGTH_SHORT).show();
                     finish();
                 }
                 setNavigator();

@@ -18,6 +18,7 @@ import com.asalman.trellodoro.bus.BusProvider;
 import com.asalman.trellodoro.events.WizardPageFinishedEvent;
 import com.asalman.trellodoro.events.api.BoardsLoadedEvent;
 import com.asalman.trellodoro.events.api.LoadBoardEvent;
+import com.asalman.trellodoro.events.api.LoadColumnsEvent;
 import com.asalman.trellodoro.models.Board;
 import com.asalman.trellodoro.preferences.Config;
 import com.asalman.trellodoro.ui.widgets.NothingSelectedSpinnerAdapter;
@@ -65,7 +66,6 @@ public class BoardFragment extends Fragment {
         super.onResume();
         MyApplication.getAnalytics().sendScreenView(TAG);
         mBus.register(this);
-        mBus.post(new LoadBoardEvent());
     }
 
     @Override
@@ -92,6 +92,7 @@ public class BoardFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int spinnerPosition, long id) {
                 if (spinner.getSelectedItem() != null) {
                     Config.setDoardID(((Board) spinner.getSelectedItem()).getId());
+                    mBus.post(new LoadColumnsEvent(Config.getBoardID()));
                     mBus.post(new WizardPageFinishedEvent(mPosition, BoardFragment.this));
                 }
             }
