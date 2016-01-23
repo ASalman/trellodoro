@@ -100,7 +100,7 @@ public class NotificationService extends IntentService{
 
         MyApplication.getAnalytics().sendEvent(Analytics.AppCategories.NOTIFICATION,
                 intent.getAction(),
-                intent.getAction().replace(getPackageName(),""));
+                intent.getAction().replace(getPackageName(), ""));
 
         boolean complete = NotificationReceiver.completeWakefulIntent(intent);
         Log.d(NotificationService.class.getName(), "Action Called: " + intent.getAction());
@@ -111,7 +111,8 @@ public class NotificationService extends IntentService{
         Notification notification = null;
         PomodoroNotificationBuilder builder = new PomodoroNotificationBuilder(context, pomodoro, alarm);
         Intent contentIntent = new Intent(context, PomodoroActivity.class);
-        notification = builder.getNotification(PendingIntent.getActivity(context, 0, contentIntent, 0));
+        contentIntent.putExtra(PomodoroActivity.EXTRA_CARD_ID, mPomodoro.getID());
+        notification = builder.getNotification(PendingIntent.getActivity(context, 0, contentIntent, PendingIntent.FLAG_UPDATE_CURRENT));
 
 
         if (notification != null) {

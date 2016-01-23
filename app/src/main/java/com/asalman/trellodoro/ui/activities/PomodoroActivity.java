@@ -19,6 +19,7 @@ import com.asalman.trellodoro.events.TimerUpdateEvent;
 import com.asalman.trellodoro.models.Card;
 import com.asalman.trellodoro.pomodoro.DBPomodoroStorage;
 import com.asalman.trellodoro.pomodoro.Pomodoro;
+import com.asalman.trellodoro.preferences.Config;
 import com.asalman.trellodoro.services.NotificationService;
 import com.asalman.trellodoro.services.TimerService;
 import com.asalman.trellodoro.utils.Analytics;
@@ -218,9 +219,11 @@ public class PomodoroActivity extends AppCompatActivity implements View.OnClickL
 
     public void start() {
         mProgress.setProgress(0);
+
         if (mPomodoro.isOngoing()) {
             sendBroadcast(NotificationService.STOP_INTENT);
         } else {
+            Config.setActiveCardID(mCard.getId());
             int activityType = mPomodoro.getState();
             if (activityType == Pomodoro.States.NONE) {
                 activityType = Pomodoro.States.POMODORO;
