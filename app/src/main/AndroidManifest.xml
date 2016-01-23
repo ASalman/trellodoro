@@ -49,11 +49,19 @@
                 <action android:name="com.asalman.trellodoro.action.DISMISS" />
                 <action android:name="com.asalman.trellodoro.action.UPDATE" />
                 <action android:name="com.asalman.trellodoro.action.ALARM" />
+                <action android:name="com.asalman.trellodoro.action.VALIDATE" />
             </intent-filter>
         </receiver>
 
         <service android:name=".services.NotificationService" />
         <service android:name=".services.TimerService" />
+        <!-- Start the Service if applicable on boot -->
+        <receiver android:name=".receiver.BootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="fd63898d3a0d37c3fb8624865b2b604ecc11238b" />

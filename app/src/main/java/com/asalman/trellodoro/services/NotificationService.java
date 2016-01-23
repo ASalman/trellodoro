@@ -12,6 +12,7 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
 import com.asalman.trellodoro.application.MyApplication;
+import com.asalman.trellodoro.db.PomodoroDAL;
 import com.asalman.trellodoro.pomodoro.Pomodoro;
 import com.asalman.trellodoro.pomodoro.PomodoroNotificationBuilder;
 import com.asalman.trellodoro.receiver.NotificationReceiver;
@@ -34,6 +35,7 @@ public class NotificationService extends IntentService{
     public static final String ACTION_DISMISS = "com.asalman.trellodoro.action.DISMISS";
     public static final String ACTION_UPDATE = "com.asalman.trellodoro.action.UPDATE";
     public static final String ACTION_FINISH_ALARM = "com.asalman.trellodoro.action.ALARM";
+    public static final String ACTION_VALIDATE = "com.asalman.trellodoro.action.VALIDATE";
 
     public static final Intent START_INTENT = new Intent(ACTION_START);
     public static final Intent STOP_INTENT = new Intent(ACTION_STOP);
@@ -86,6 +88,9 @@ public class NotificationService extends IntentService{
                 alarm = true;
                 finishAlarm(this);
                 break;
+            case ACTION_VALIDATE:
+                finishAlarm(this);
+                break;
             case ACTION_DISMISS:
                 notificationManager.cancel(NOTIFICATION_ID_NORMAL);
                 notificationManager.cancel(NOTIFICATION_ID_ONGOING);
@@ -135,7 +140,7 @@ public class NotificationService extends IntentService{
     }
 
     private void stop(Context context) {
-        mPomodoro.stop(false);
+        mPomodoro.stop();
 
         notificationManager.cancel(NOTIFICATION_ID_NORMAL);
         notificationManager.cancel(NOTIFICATION_ID_ONGOING);
@@ -170,7 +175,12 @@ public class NotificationService extends IntentService{
         cancelAlarm(context, REQUEST_FINISH, FINISH_ALARM_INTENT);
         cancelAlarm(context, REQUEST_UPDATE, UPDATE_INTENT);
 
-        mPomodoro.stop(true);
+        mPomodoro.stop();
+    }
+
+    private void validate(){
+        PomodoroDAL pomodoroDAL = new PomodoroDAL(MyApplication.getApp().getDatabaseHelper());
+        pomodoroDAL.validateDB();
     }
 
     private void setRepeatingAlarm(Context context, int requestCode, Intent intent) {
